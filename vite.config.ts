@@ -5,6 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: '/Quan_Ly_Lop_Hoc/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
