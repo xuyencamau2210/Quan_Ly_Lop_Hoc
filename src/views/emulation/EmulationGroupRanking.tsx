@@ -22,6 +22,7 @@ interface EmulationGroupRankingProps {
   selectedClassId: string;
   selectedPeriodId: string;
   onRefresh: () => void;
+  onNavigateToGroupManager?: () => void;
 }
 
 export const EmulationGroupRanking: React.FC<EmulationGroupRankingProps> = ({
@@ -30,7 +31,8 @@ export const EmulationGroupRanking: React.FC<EmulationGroupRankingProps> = ({
   periods,
   selectedClassId,
   selectedPeriodId,
-  onRefresh
+  onRefresh,
+  onNavigateToGroupManager
 }) => {
   const { success, error } = useToast();
 
@@ -114,13 +116,23 @@ export const EmulationGroupRanking: React.FC<EmulationGroupRankingProps> = ({
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-auto">
-          <button
-            onClick={() => setIsAssignModalOpen(true)}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl transition-colors cursor-pointer"
-          >
-            <UserPlus className="w-4 h-4" />
-            Phân tổ học sinh
-          </button>
+          {onNavigateToGroupManager ? (
+            <button
+              onClick={onNavigateToGroupManager}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-xs transition-colors cursor-pointer"
+            >
+              <UserPlus className="w-4 h-4" />
+              Quản lý tổ & Phân tổ học sinh
+            </button>
+          ) : (
+            <button
+              onClick={() => setIsAssignModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl transition-colors cursor-pointer"
+            >
+              <UserPlus className="w-4 h-4" />
+              Phân tổ học sinh
+            </button>
+          )}
         </div>
       </div>
 

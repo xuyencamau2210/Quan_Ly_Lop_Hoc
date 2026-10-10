@@ -262,3 +262,56 @@ export interface WeeklyGroupSummary {
   TrangThai: EmulationSummaryStatus;
 }
 
+// ==========================================
+// TỔ CHỨC LỚP & BAN CÁN SỰ & SƠ ĐỒ CHỖ NGỒI
+// ==========================================
+
+export type OfficerRole = 
+  | 'LOP_TRUONG' 
+  | 'LOP_PHO_HOC_TAP' 
+  | 'LOP_PHO_KY_LUAT' 
+  | 'LOP_PHO_LAO_DONG' 
+  | 'LOP_PHO_PHONG_TRAO' 
+  | 'THU_QUY' 
+  | 'TO_TRUONG'
+  | 'TO_PHO'
+  | 'KHAC';
+
+export interface ClassOfficer {
+  id: string;
+  classId: string;
+  studentId: string;
+  studentName: string;
+  studentCode: string;
+  role: OfficerRole;
+  customRoleTitle?: string;
+  duty?: string; // Nhiệm vụ cụ thể
+  contactPhone?: string;
+  appointedDate?: string;
+}
+
+export interface SeatPosition {
+  seatId: string; // e.g. "R1-C1-S1"
+  row: number; // 1-indexed (Hàng bàn 1 -> rows)
+  column: number; // 1-indexed (Dãy bàn 1 -> columns)
+  seatIndex: number; // 1 or 2 (Vị trí bàn: trái / phải)
+  studentId?: string;
+  studentName?: string;
+  studentCode?: string;
+  note?: string;
+}
+
+export interface SeatingChart {
+  id: string;
+  classId: string;
+  title: string;
+  academicYear: string;
+  term?: string; // HK1, HK2
+  rows: number; // số hàng bàn (mặc định 5)
+  columns: number; // số dãy bàn (mặc định 4)
+  seatsPerDesk: number; // số chỗ ngồi mỗi bàn (1 hoặc 2, mặc định 2)
+  seats: SeatPosition[];
+  updatedAt: string;
+  teacherNote?: string;
+}
+

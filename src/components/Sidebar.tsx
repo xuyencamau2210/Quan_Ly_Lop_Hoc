@@ -9,12 +9,14 @@ import {
   FileText, 
   Settings,
   Layers,
-  FileSpreadsheet
+  FileSpreadsheet,
+  LayoutGrid
 } from 'lucide-react';
 
 export type NavTab = 
   | 'dashboard' 
   | 'classes' 
+  | 'organization'
   | 'students' 
   | 'attendance' 
   | 'emulation'
@@ -51,6 +53,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
       label: 'Lớp học',
       icon: School,
       badge: classCount ? `${classCount}` : null
+    },
+    {
+      id: 'organization' as NavTab,
+      label: 'Tổ chức lớp & Sơ đồ',
+      icon: LayoutGrid,
+      badge: null
     },
     {
       id: 'students' as NavTab,

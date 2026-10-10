@@ -18,7 +18,8 @@ import {
   ArrowUpCircle,
   FolderOpen,
   PlusCircle,
-  AlertTriangle
+  AlertTriangle,
+  Download
 } from 'lucide-react';
 import { AppSettings, Semester } from '../types/index.ts';
 import { api } from '../services/api.ts';
@@ -671,12 +672,39 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </div>
         </div>
 
+        {/* Section: Xuất tệp Excel lưu trữ dữ liệu */}
+        <div className="bg-white p-6 rounded-2xl border border-emerald-200 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 bg-gradient-to-r from-emerald-50/50 via-white to-teal-50/40">
+          <div className="flex items-start gap-3.5">
+            <div className="p-3 rounded-xl bg-emerald-100 text-emerald-800 shrink-0">
+              <FileSpreadsheet className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base font-extrabold text-slate-900">Xuất File Excel (.xlsx) Lưu Trữ Dữ Liệu</h3>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">11 BẢNG DỮ LIỆU</span>
+              </div>
+              <p className="text-xs text-slate-600 mt-1 max-w-xl leading-relaxed">
+                Đóng gói toàn bộ cơ sở dữ liệu: Lớp học, Học sinh, Ban cán sự, Sơ đồ chỗ ngồi, Tổ thi đua, Các tuần thi đua (từ 07/09/2026), Lịch sử thi đua, Điểm danh và Cấu hình vào tệp Microsoft Excel chuẩn để lưu trữ ngoại tuyến.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => api.downloadExcel()}
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 active:scale-95 rounded-xl shadow-sm shadow-emerald-200 transition-all cursor-pointer shrink-0"
+          >
+            <Download className="w-4 h-4" />
+            <span>Tải file Excel ngay</span>
+          </button>
+        </div>
+
         {/* Section 4: Khôi phục & Dữ liệu mẫu */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h3 className="text-base font-bold text-slate-900">Khôi phục Dữ liệu Mẫu (Reset Demo)</h3>
+            <h3 className="text-base font-bold text-slate-900">Khôi phục Dữ liệu Gốc Lớp 10C2</h3>
             <p className="text-xs text-slate-500 mt-1 max-w-lg">
-              Nếu bạn muốn xem lại các lớp 10A1, 10A2, 11B1, 12C3 cùng danh sách học sinh và điểm danh mẫu ban đầu, bấm nút dưới đây.
+              Khôi phục lại dữ liệu chuẩn của lớp 10C2 cùng danh sách 39 học sinh, ban cán sự, sơ đồ chỗ ngồi và 4 tổ thi đua ban đầu.
             </p>
           </div>
 

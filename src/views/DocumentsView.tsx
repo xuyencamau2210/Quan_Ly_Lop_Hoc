@@ -272,13 +272,22 @@ export const DocumentsView: React.FC<DocumentsViewProps> = ({ classes }) => {
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={() => api.downloadExcel()}
+            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm shadow-sm shadow-emerald-200 transition-all cursor-pointer"
+            title="Tải toàn bộ cơ sở dữ liệu ứng dụng dưới dạng file Microsoft Excel (.xlsx)"
+          >
+            <FileSpreadsheet className="w-4 h-4" />
+            <span>Tải file Excel (.xlsx)</span>
+          </button>
+
           {viewMode === 'class_docs' ? (
             <button
               onClick={handleOpenAdd}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm shadow-indigo-200 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-sm shadow-indigo-200 transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              Liên kết tài liệu mới
+              <span>Liên kết tài liệu mới</span>
             </button>
           ) : (
             <button

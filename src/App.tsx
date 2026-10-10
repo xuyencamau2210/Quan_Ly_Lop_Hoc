@@ -9,10 +9,12 @@ import { Sidebar, NavTab } from './components/Sidebar.tsx';
 import { ToastProvider, useToast } from './components/Toast.tsx';
 import { ConfirmModal } from './components/ConfirmModal.tsx';
 import { SyncStatusModal } from './components/SyncStatusModal.tsx';
+import { ExcelExportModal } from './components/ExcelExportModal.tsx';
 
 // Views
 import { DashboardView } from './views/DashboardView.tsx';
 import { ClassesView } from './views/ClassesView.tsx';
+import { OrganizationView } from './views/OrganizationView.tsx';
 import { StudentsView } from './views/StudentsView.tsx';
 import { AttendanceView } from './views/AttendanceView.tsx';
 import { EmulationView } from './views/emulation/EmulationView.tsx';
@@ -42,6 +44,7 @@ function MainApp() {
   // Modals
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [isSyncModalOpen, setIsSyncModalOpen] = useState(false);
+  const [isExcelExportModalOpen, setIsExcelExportModalOpen] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
 
   // Initial load
@@ -131,6 +134,11 @@ function MainApp() {
     setActiveTab('emulation');
   };
 
+  const handleQuickOrganization = (classId: string) => {
+    setSelectedClassForTab(classId);
+    setActiveTab('organization');
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col text-slate-900 font-sans">
       {/* Top Navigation */}
@@ -139,6 +147,7 @@ function MainApp() {
         onResetDemo={() => setIsResetModalOpen(true)}
         onOpenSyncStatus={() => setIsSyncModalOpen(true)}
         onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
+        onOpenExcelExport={() => setIsExcelExportModalOpen(true)}
       />
 
       <div className="flex-1 flex max-w-7xl w-full mx-auto">
@@ -147,7 +156,7 @@ function MainApp() {
           activeTab={activeTab}
           onTabChange={(tab) => {
             setActiveTab(tab);
-            if (tab !== 'attendance' && tab !== 'emulation') {
+            if (tab !== 'attendance' && tab !== 'emulation' && tab !== 'organization') {
               setSelectedClassForTab(undefined);
             }
           }}
@@ -176,6 +185,16 @@ function MainApp() {
               onRefresh={refreshClassesAndStudents}
               onSelectClassForAttendance={handleQuickAttendance}
               onSelectClassForEmulation={handleQuickEmulation}
+              onSelectClassForOrganization={handleQuickOrganization}
+            />
+          )}
+
+          {activeTab === 'organization' && (
+            <OrganizationView
+              classes={classes}
+              students={students}
+              initialClassId={selectedClassForTab}
+              onRefresh={refreshClassesAndStudents}
             />
           )}
 
@@ -235,11 +254,19 @@ function MainApp() {
         onNavigateToSettings={() => setActiveTab('settings')}
       />
 
+      {/* Excel Export Modal */}
+      <ExcelExportModal
+        isOpen={isExcelExportModalOpen}
+        onClose={() => setIsExcelExportModalOpen(false)}
+        classes={classes}
+        defaultClassId={selectedClassForTab}
+      />
+
       {/* Reset Demo Data Modal */}
       <ConfirmModal
         isOpen={isResetModalOpen}
-        title="Khôi phục dữ liệu mẫu ban đầu?"
-        message="Hành động này sẽ khôi phục lại các lớp 10A1, 10A2, 11B1, 12C3 cùng dữ liệu mẫu ban đầu về học sinh, điểm danh và thi đua tuần. Mọi thay đổi bạn đã tạo sau đó sẽ được làm mới."
+        title="Khôi phục dữ liệu ban đầu?"
+        message="Hành động này sẽ khôi phục lại dữ liệu gốc của lớp 10C2 (39 học sinh, ban cán sự, sơ đồ chỗ ngồi và 4 tổ thi đua). Mọi thay đổi bạn đã tạo sau đó sẽ được làm mới."
         confirmText="Khôi phục ngay"
         cancelText="Giữ lại dữ liệu hiện tại"
         isDestructive={false}

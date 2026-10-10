@@ -60,6 +60,15 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
 
         <div className="flex items-center gap-2 self-start sm:self-auto">
           <button
+            onClick={() => api.downloadExcel()}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm shadow-emerald-200 transition-all cursor-pointer"
+            title="Tải toàn bộ cơ sở dữ liệu ứng dụng dưới dạng file Microsoft Excel (.xlsx)"
+          >
+            <FileSpreadsheet className="w-4 h-4" />
+            Xuất file Excel (.xlsx)
+          </button>
+
+          <button
             onClick={handlePrint}
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm shadow-indigo-200 transition-all cursor-pointer"
           >

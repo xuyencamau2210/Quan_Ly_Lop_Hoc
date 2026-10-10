@@ -107,6 +107,13 @@ export const EmulationOverview: React.FC<EmulationOverviewProps> = ({
               Ghi nhận sự việc mới
             </button>
             <button
+              onClick={() => onNavigateSubScreen('group-manager')}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-900/60 hover:bg-teal-900/90 text-white font-semibold text-xs border border-white/20 transition-all cursor-pointer"
+            >
+              <Users className="w-4 h-4 text-teal-200" />
+              Quản lý tổ & Phân tổ
+            </button>
+            <button
               onClick={() => onNavigateSubScreen('group-ranking')}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-900/60 hover:bg-teal-900/90 text-white font-semibold text-xs border border-white/20 transition-all cursor-pointer"
             >

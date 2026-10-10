@@ -1,7 +1,8 @@
 import { 
   Classroom, Student, AttendanceRecord, GradeItem, DocumentItem, AppSettings, DashboardStats,
   EmulationCategory, EmulationGroup, GroupMember, EmulationPeriod, EmulationRecord,
-  WeeklyStudentSummary, WeeklyGroupSummary
+  WeeklyStudentSummary, WeeklyGroupSummary,
+  ClassOfficer, SeatingChart
 } from '../types/index.ts';
 import { getAccessToken } from './auth.ts';
 
@@ -69,6 +70,78 @@ export const api = {
       method: 'DELETE'
     });
     return handleResponse<{ message: string }>(res);
+  },
+
+  // Ban cán sự lớp (Class Officers)
+  getClassOfficers: async (classId: string): Promise<ClassOfficer[]> => {
+    const res = await fetch(`${BASE_URL}/classes/${encodeURIComponent(classId)}/officers`);
+    return handleResponse<ClassOfficer[]>(res);
+  },
+  assignClassOfficer: async (classId: string, data: {
+    studentId: string;
+    role: string;
+    customRoleTitle?: string;
+    duty?: string;
+    contactPhone?: string;
+  }): Promise<ClassOfficer> => {
+    const res = await fetch(`${BASE_URL}/classes/${encodeURIComponent(classId)}/officers`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return handleResponse<ClassOfficer>(res);
+  },
+  updateClassOfficer: async (classId: string, officerId: string, data: Partial<ClassOfficer>): Promise<ClassOfficer> => {
+    const res = await fetch(`${BASE_URL}/classes/${encodeURIComponent(classId)}/officers/${encodeURIComponent(officerId)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return handleResponse<ClassOfficer>(res);
+  },
+  removeClassOfficer: async (classId: string, officerId: string): Promise<{ success: boolean; message: string }> => {
+    const res = await fetch(`${BASE_URL}/classes/${encodeURIComponent(classId)}/officers/${encodeURIComponent(officerId)}`, {
+      method: 'DELETE'
+    });
+    return handleResponse<{ success: boolean; message: string }>(res);
+  },
+
+  // Sơ đồ chỗ ngồi (Seating Chart)
+  getSeatingChart: async (classId: string): Promise<SeatingChart> => {
+    const res = await fetch(`${BASE_URL}/classes/${encodeURIComponent(classId)}/seating-chart`);
+    return handleResponse<SeatingChart>(res);
+  },
+  saveSeatingChart: async (classId: string, chart: SeatingChart): Promise<SeatingChart> => {
+    const res = await fetch(`${BASE_URL}/classes/${encodeURIComponent(classId)}/seating-chart`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(chart)
+    });
+    return handleResponse<SeatingChart>(res);
+  },
+  assignSeat: async (classId: string, seatId: string, studentId?: string, note?: string): Promise<SeatingChart> => {
+    const res = await fetch(`${BASE_URL}/classes/${encodeURIComponent(classId)}/seating-chart/assign`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ seatId, studentId, note })
+    });
+    return handleResponse<SeatingChart>(res);
+  },
+  swapSeats: async (classId: string, seatIdA: string, seatIdB: string): Promise<SeatingChart> => {
+    const res = await fetch(`${BASE_URL}/classes/${encodeURIComponent(classId)}/seating-chart/swap`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ seatIdA, seatIdB })
+    });
+    return handleResponse<SeatingChart>(res);
+  },
+  autoArrangeSeats: async (classId: string, mode: 'byGroup' | 'alternatingGender' | 'alphabetical' | 'clear'): Promise<SeatingChart> => {
+    const res = await fetch(`${BASE_URL}/classes/${encodeURIComponent(classId)}/seating-chart/auto-arrange`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode })
+    });
+    return handleResponse<SeatingChart>(res);
   },
 
   // Students
@@ -253,6 +326,20 @@ export const api = {
     });
     return handleResponse<EmulationGroup>(res);
   },
+  updateEmulationGroup: async (id: string, data: { TenTo?: string; ToTruong?: string; TrangThai?: any }): Promise<EmulationGroup> => {
+    const res = await fetch(`${BASE_URL}/emulation/groups/${encodeURIComponent(id)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return handleResponse<EmulationGroup>(res);
+  },
+  deleteEmulationGroup: async (id: string): Promise<{ success: boolean; message: string }> => {
+    const res = await fetch(`${BASE_URL}/emulation/groups/${encodeURIComponent(id)}`, {
+      method: 'DELETE'
+    });
+    return handleResponse<{ success: boolean; message: string }>(res);
+  },
   getGroupMembers: async (classId?: string): Promise<GroupMember[]> => {
     const url = classId ? `${BASE_URL}/emulation/groups/members?classId=${encodeURIComponent(classId)}` : `${BASE_URL}/emulation/groups/members`;
     const res = await fetch(url);
@@ -265,6 +352,30 @@ export const api = {
       body: JSON.stringify(data)
     });
     return handleResponse<GroupMember>(res);
+  },
+  unassignStudentFromGroup: async (MaHS: string): Promise<{ success: boolean }> => {
+    const res = await fetch(`${BASE_URL}/emulation/groups/unassign`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ MaHS })
+    });
+    return handleResponse<{ success: boolean }>(res);
+  },
+  batchAssignStudentsToGroup: async (assignments: { MaHS: string; MaTo: string }[], TuNgay?: string): Promise<any> => {
+    const res = await fetch(`${BASE_URL}/emulation/groups/batch-assign`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ assignments, TuNgay })
+    });
+    return handleResponse<any>(res);
+  },
+  autoDivideStudentsIntoGroups: async (classId: string, groupIds: string[], assignOnlyUnassigned: boolean = false): Promise<{ assignedCount: number; groups: any[] }> => {
+    const res = await fetch(`${BASE_URL}/emulation/groups/auto-divide`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ classId, groupIds, assignOnlyUnassigned })
+    });
+    return handleResponse<{ assignedCount: number; groups: any[] }>(res);
   },
 
   // Periods
@@ -279,6 +390,28 @@ export const api = {
       body: JSON.stringify(data)
     });
     return handleResponse<EmulationPeriod>(res);
+  },
+  updateEmulationPeriod: async (id: string, data: Partial<EmulationPeriod>): Promise<EmulationPeriod> => {
+    const res = await fetch(`${BASE_URL}/emulation/periods/${encodeURIComponent(id)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return handleResponse<EmulationPeriod>(res);
+  },
+  deleteEmulationPeriod: async (id: string): Promise<{ success: boolean; message: string }> => {
+    const res = await fetch(`${BASE_URL}/emulation/periods/${encodeURIComponent(id)}`, {
+      method: 'DELETE'
+    });
+    return handleResponse<{ success: boolean; message: string }>(res);
+  },
+  resetEmulationPeriods: async (startDate: string = '2026-09-07', totalWeeks: number = 18): Promise<{ success: boolean; message: string; periods: EmulationPeriod[] }> => {
+    const res = await fetch(`${BASE_URL}/emulation/periods/reset`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ startDate, totalWeeks })
+    });
+    return handleResponse<{ success: boolean; message: string; periods: EmulationPeriod[] }>(res);
   },
 
   // Records
@@ -480,6 +613,28 @@ export const api = {
       method: 'DELETE',
       headers: getAuthHeaders()
     });
+    return handleResponse<any>(res);
+  },
+
+  // Excel Export (.xlsx)
+  getExcelExportSummary: async (classId?: string): Promise<any> => {
+    const url = classId ? `${BASE_URL}/export/excel/summary?classId=${encodeURIComponent(classId)}` : `${BASE_URL}/export/excel/summary`;
+    const res = await fetch(url);
+    return handleResponse<any>(res);
+  },
+
+  downloadExcel: (classId?: string) => {
+    const url = classId ? `${BASE_URL}/export/excel?classId=${encodeURIComponent(classId)}` : `${BASE_URL}/export/excel`;
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', classId ? `Du_Lieu_Lop_${classId}_2026_2027.xlsx` : 'Du_Lieu_Quan_Ly_Lop_Hoc_2026_2027.xlsx');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  },
+
+  generateExcelOnServer: async (): Promise<any> => {
+    const res = await fetch(`${BASE_URL}/export/excel/generate`, { method: 'POST' });
     return handleResponse<any>(res);
   }
 };

@@ -19,13 +19,15 @@ interface NavbarProps {
   onResetDemo: () => void;
   onOpenSyncStatus: () => void;
   onToggleMobileMenu: () => void;
+  onOpenExcelExport?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   settings,
   onResetDemo,
   onOpenSyncStatus,
-  onToggleMobileMenu
+  onToggleMobileMenu,
+  onOpenExcelExport
 }) => {
   const { success, error } = useToast();
   const [googleUser, setGoogleUser] = useState(getCurrentUser());
@@ -120,6 +122,17 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right: Actions & User Info */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {onOpenExcelExport && (
+            <button
+              onClick={onOpenExcelExport}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition-colors border border-emerald-200/90 cursor-pointer shadow-2xs"
+              title="Xuất file Excel (.xlsx) lưu trữ toàn bộ dữ liệu ứng dụng"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-700" />
+              <span className="hidden sm:inline">Xuất Excel</span>
+            </button>
+          )}
+
           <button
             onClick={onResetDemo}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors border border-slate-200/60 cursor-pointer"

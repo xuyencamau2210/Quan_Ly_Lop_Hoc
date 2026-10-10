@@ -5,12 +5,14 @@ import {
   Classroom, Student, AttendanceRecord, GradeItem, DocumentItem, AppSettings, DashboardStats, AcademicRank,
   EmulationCategory, EmulationGroup, GroupMember, EmulationPeriod, EmulationRecord,
   WeeklyStudentSummary, WeeklyGroupSummary,
-  EmulationType, EmulationCategoryStatus, EmulationRecordStatus, EmulationSummaryStatus
+  EmulationType, EmulationCategoryStatus, EmulationRecordStatus, EmulationSummaryStatus,
+  ClassOfficer, SeatingChart, SeatPosition, OfficerRole
 } from '../../src/types/index.ts';
 import { 
   initialClasses, initialStudents, initialAttendance, initialGrades, initialDocuments, initialSettings,
   initialEmulationCategories, initialEmulationGroups, initialGroupMembers, initialEmulationPeriods,
-  initialEmulationRecords, initialWeeklyStudentSummaries, initialWeeklyGroupSummaries
+  initialEmulationRecords, initialWeeklyStudentSummaries, initialWeeklyGroupSummaries,
+  initialClassOfficers, initialSeatingCharts
 } from './initialData.ts';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -31,6 +33,8 @@ export interface DatabaseState {
   emulationRecords: EmulationRecord[];
   weeklyStudentSummaries: WeeklyStudentSummary[];
   weeklyGroupSummaries: WeeklyGroupSummary[];
+  classOfficers: ClassOfficer[];
+  seatingCharts: SeatingChart[];
   lastUpdated: string;
 }
 
@@ -71,6 +75,8 @@ export class ClassroomStore {
         emulationRecords: [],
         weeklyStudentSummaries: [],
         weeklyGroupSummaries: [],
+        classOfficers: [],
+        seatingCharts: [],
         lastUpdated: new Date().toISOString()
       };
     }
@@ -101,6 +107,12 @@ export class ClassroomStore {
           if (!parsed.weeklyGroupSummaries) {
             parsed.weeklyGroupSummaries = JSON.parse(JSON.stringify(initialWeeklyGroupSummaries));
           }
+          if (!parsed.classOfficers) {
+            parsed.classOfficers = JSON.parse(JSON.stringify(initialClassOfficers));
+          }
+          if (!parsed.seatingCharts) {
+            parsed.seatingCharts = JSON.parse(JSON.stringify(initialSeatingCharts));
+          }
           return parsed;
         }
       }
@@ -122,6 +134,8 @@ export class ClassroomStore {
       emulationRecords: JSON.parse(JSON.stringify(initialEmulationRecords)),
       weeklyStudentSummaries: JSON.parse(JSON.stringify(initialWeeklyStudentSummaries)),
       weeklyGroupSummaries: JSON.parse(JSON.stringify(initialWeeklyGroupSummaries)),
+      classOfficers: JSON.parse(JSON.stringify(initialClassOfficers)),
+      seatingCharts: JSON.parse(JSON.stringify(initialSeatingCharts)),
       lastUpdated: new Date().toISOString()
     };
 
@@ -807,17 +821,92 @@ export class ClassroomStore {
     return newMember;
   }
 
+  public updateEmulationGroup(MaTo: string, data: { TenTo?: string; ToTruong?: string; TrangThai?: 'DANG_HOAT_DONG' | 'NGUNG' }): EmulationGroup | undefined {
+    const group = this.state.emulationGroups.find(g => g.MaTo === MaTo);
+    if (!group) return undefined;
+    if (data.TenTo !== undefined) group.TenTo = data.TenTo.trim();
+    if (data.ToTruong !== undefined) group.ToTruong = data.ToTruong.trim();
+    if (data.TrangThai !== undefined) group.TrangThai = data.TrangThai;
+    this.saveData();
+    return group;
+  }
+
+  public deleteEmulationGroup(MaTo: string): boolean {
+    const index = this.state.emulationGroups.findIndex(g => g.MaTo === MaTo);
+    if (index === -1) return false;
+    this.state.emulationGroups.splice(index, 1);
+    // Remove memberships for this group
+    this.state.groupMembers = this.state.groupMembers.filter(m => m.MaTo !== MaTo);
+    this.saveData();
+    return true;
+  }
+
+  public unassignStudentFromGroup(MaHS: string): boolean {
+    const prevCount = this.state.groupMembers.length;
+    this.state.groupMembers = this.state.groupMembers.filter(m => m.MaHS !== MaHS);
+    if (this.state.groupMembers.length !== prevCount) {
+      this.saveData();
+      return true;
+    }
+    return false;
+  }
+
+  public batchAssignStudentsToGroup(assignments: { MaHS: string; MaTo: string }[], TuNgay: string = '2026-09-07'): GroupMember[] {
+    const result: GroupMember[] = [];
+    for (const item of assignments) {
+      if (item.MaHS && item.MaTo) {
+        const mem = this.assignStudentToGroup(item.MaHS, item.MaTo, TuNgay);
+        result.push(mem);
+      } else if (item.MaHS && !item.MaTo) {
+        this.unassignStudentFromGroup(item.MaHS);
+      }
+    }
+    return result;
+  }
+
+  public autoAssignStudentsEqually(classId: string, groupIds: string[], assignOnlyUnassigned: boolean = false): { assignedCount: number; groups: any[] } {
+    const groupsOfClass = this.state.emulationGroups.filter(g => g.MaLop === classId && groupIds.includes(g.MaTo) && g.TrangThai === 'DANG_HOAT_DONG');
+    if (groupsOfClass.length === 0) {
+      throw new Error('Lớp chưa có tổ hoạt động nào được chọn');
+    }
+
+    const studentsInClass = this.state.students.filter(s => s.classId === classId && s.status === 'active');
+    let targetStudents = studentsInClass;
+
+    if (assignOnlyUnassigned) {
+      const assignedIds = this.state.groupMembers
+        .filter(m => groupsOfClass.some(g => g.MaTo === m.MaTo))
+        .map(m => m.MaHS);
+      targetStudents = studentsInClass.filter(s => !assignedIds.includes(s.id));
+    }
+
+    // Sort students by name alphabetically for fair grouping
+    targetStudents.sort((a, b) => a.fullName.localeCompare(b.fullName, 'vi'));
+
+    let assignedCount = 0;
+    targetStudents.forEach((student, index) => {
+      const targetGroup = groupsOfClass[index % groupsOfClass.length];
+      this.assignStudentToGroup(student.id, targetGroup.MaTo, '2026-09-07');
+      assignedCount++;
+    });
+
+    return {
+      assignedCount,
+      groups: this.getEmulationGroups(classId)
+    };
+  }
+
   // --- KỲ THI ĐUA (TUẦN) ---
   public getEmulationPeriods(): EmulationPeriod[] {
-    return [...this.state.emulationPeriods].sort((a, b) => b.TuanSo - a.TuanSo);
+    return [...this.state.emulationPeriods].sort((a, b) => a.TuanSo - b.TuanSo);
   }
 
   public getEmulationPeriodById(MaKy: string): EmulationPeriod | undefined {
     return this.state.emulationPeriods.find(p => p.MaKy === MaKy);
   }
 
-  public createEmulationPeriod(data: { NamHoc: string; TuanSo: number; TuNgay: string; DenNgay: string; DiemDauTuan?: number; GhiChu?: string; MaKy?: string }): EmulationPeriod {
-    const MaKy = data.MaKy || `${new Date(data.TuNgay).getFullYear()}-W${data.TuanSo.toString().padStart(2, '0')}`;
+  public createEmulationPeriod(data: { NamHoc?: string; TuanSo: number; TuNgay: string; DenNgay: string; DiemDauTuan?: number; GhiChu?: string; MaKy?: string; TrangThai?: any }): EmulationPeriod {
+    const MaKy = data.MaKy || `2026-W${data.TuanSo.toString().padStart(2, '0')}`;
     const existing = this.state.emulationPeriods.find(p => p.MaKy === MaKy);
     if (existing) {
       return existing;
@@ -825,13 +914,13 @@ export class ClassroomStore {
 
     const newPeriod: EmulationPeriod = {
       MaKy,
-      NamHoc: data.NamHoc || '2025 - 2026',
+      NamHoc: data.NamHoc || '2026 - 2027',
       TuanSo: Number(data.TuanSo),
       TuNgay: data.TuNgay,
       DenNgay: data.DenNgay,
       DiemDauTuan: data.DiemDauTuan !== undefined ? Number(data.DiemDauTuan) : 0,
-      TrangThai: 'DANG_DIEN_RA',
-      GhiChu: data.GhiChu || '',
+      TrangThai: data.TrangThai || (new Date(data.DenNgay) < new Date('2026-10-05') ? 'DA_KHOA' : 'DANG_DIEN_RA'),
+      GhiChu: data.GhiChu || `Tuần ${data.TuanSo}`,
       LichSuMoKhoa: []
     };
 
@@ -840,12 +929,101 @@ export class ClassroomStore {
     return newPeriod;
   }
 
+  public updateEmulationPeriod(MaKy: string, data: Partial<EmulationPeriod>): EmulationPeriod | undefined {
+    const period = this.state.emulationPeriods.find(p => p.MaKy === MaKy);
+    if (!period) return undefined;
+    Object.assign(period, data);
+    this.saveData();
+    return period;
+  }
+
+  public deleteEmulationPeriod(MaKy: string): boolean {
+    const index = this.state.emulationPeriods.findIndex(p => p.MaKy === MaKy);
+    if (index === -1) return false;
+    this.state.emulationPeriods.splice(index, 1);
+    this.saveData();
+    return true;
+  }
+
+  public resetEmulationPeriodsToAcademicYear(startDateStr: string = '2026-09-07', totalWeeks: number = 18): EmulationPeriod[] {
+    const start = new Date(startDateStr);
+    const newPeriods: EmulationPeriod[] = [];
+
+    const weekThemes = [
+      'Khai giảng & phát động thi đua năm học mới',
+      'Ổn định nề nếp học tập và kỷ cương trường lớp',
+      'Phát huy tinh thần tự quản và tinh thần đoàn kết',
+      'Phát động thi đua cao điểm chào mừng tháng 10',
+      'Trọng tâm học tốt, ôn tập giữa học kỳ 1 (Tuần hiện tại)',
+      'Phong trào thi đua chào mừng Ngày Phụ nữ Việt Nam 20/10',
+      'Nỗ lực đạt nhiều bông hoa điểm 10',
+      'Phát động đợt thi đua chào mừng Ngày Nhà giáo Việt Nam 20/11',
+      'Tiết học tốt, giờ học hay dâng tặng thầy cô',
+      'Giữ vững nề nếp kỷ cương trường lớp',
+      'Tuần lễ tri ân thầy cô giáo 20/11',
+      'Đẩy mạnh phong trào tự học và đôi bạn cùng tiến',
+      'Chuẩn bị kế hoạch ôn thi cuối học kỳ 1',
+      'Ôn tập cao điểm học kỳ 1',
+      'Thi học kỳ 1 nghiêm túc, đúng quy chế',
+      'Tổng kết thi đua học kỳ 1',
+      'Chuẩn bị sơ kết học kỳ 1',
+      'Khởi động phong trào thi đua học kỳ 2'
+    ];
+
+    for (let i = 1; i <= totalWeeks; i++) {
+      const weekMonday = new Date(start);
+      weekMonday.setDate(start.getDate() + (i - 1) * 7);
+      const weekSunday = new Date(weekMonday);
+      weekSunday.setDate(weekMonday.getDate() + 6);
+
+      const monStr = weekMonday.toISOString().split('T')[0];
+      const sunStr = weekSunday.toISOString().split('T')[0];
+      const code = `2026-W${i.toString().padStart(2, '0')}`;
+      const isPast = sunStr < '2026-10-05';
+
+      newPeriods.push({
+        MaKy: code,
+        NamHoc: '2026 - 2027',
+        TuanSo: i,
+        TuNgay: monStr,
+        DenNgay: sunStr,
+        DiemDauTuan: 0,
+        TrangThai: isPast ? 'DA_KHOA' : 'DANG_DIEN_RA',
+        ThoiGianKhoa: isPast ? `${sunStr}T18:00:00Z` : undefined,
+        NguoiKhoa: isPast ? 'Ban Thi Đua' : undefined,
+        GhiChu: `Tuần ${i}: ${weekThemes[i - 1] || 'Thi đua nề nếp và học tập'}`
+      });
+    }
+
+    // Remap records that pointed to old demo codes W40 and W41
+    this.state.emulationRecords.forEach(rec => {
+      if (rec.MaKy === '2026-W40') rec.MaKy = '2026-W04';
+      if (rec.MaKy === '2026-W41') rec.MaKy = '2026-W05';
+      if (rec.MaKy === '2026-W42') rec.MaKy = '2026-W06';
+    });
+
+    this.state.weeklyStudentSummaries.forEach(s => {
+      if (s.MaKy === '2026-W40') s.MaKy = '2026-W04';
+      if (s.MaKy === '2026-W41') s.MaKy = '2026-W05';
+    });
+
+    this.state.weeklyGroupSummaries.forEach(g => {
+      if (g.MaKy === '2026-W40') g.MaKy = '2026-W04';
+      if (g.MaKy === '2026-W41') g.MaKy = '2026-W05';
+    });
+
+    this.state.emulationPeriods = newPeriods;
+    this.saveData();
+    return newPeriods;
+  }
+
   // Tự động xác định MaKy từ ngày xảy ra theo múi giờ Việt Nam
   public determinePeriodFromDate(dateStr: string): EmulationPeriod {
     const found = this.state.emulationPeriods.find(p => dateStr >= p.TuNgay && dateStr <= p.DenNgay);
     if (found) return found;
 
-    // Nếu chưa có, tự động tạo kỳ cho tuần chứa ngày này
+    // Nếu chưa có, tính tuần số từ ngày 07/09/2026 (Tuần 1)
+    const baseDate = new Date('2026-09-07');
     const d = new Date(dateStr);
     const day = d.getDay(); // 0 is Sunday, 1 is Monday
     const diffToMonday = d.getDate() - day + (day === 0 ? -6 : 1);
@@ -856,13 +1034,11 @@ export class ClassroomStore {
     const monStr = monday.toISOString().split('T')[0];
     const sunStr = sunday.toISOString().split('T')[0];
 
-    // Tính tuần số xấp xỉ trong năm
-    const oneJan = new Date(monday.getFullYear(), 0, 1);
-    const numberOfDays = Math.floor((monday.getTime() - oneJan.getTime()) / (24 * 60 * 60 * 1000));
-    const weekNumber = Math.ceil((numberOfDays + oneJan.getDay() + 1) / 7);
+    const diffDays = Math.floor((monday.getTime() - baseDate.getTime()) / (24 * 60 * 60 * 1000));
+    const weekNumber = Math.max(1, Math.floor(diffDays / 7) + 1);
 
     return this.createEmulationPeriod({
-      NamHoc: this.state.settings.academicYear || '2025 - 2026',
+      NamHoc: '2026 - 2027',
       TuanSo: weekNumber,
       TuNgay: monStr,
       DenNgay: sunStr,
@@ -1322,6 +1498,264 @@ export class ClassroomStore {
     };
   }
 
+  // --- BAN CÁN SỰ LỚP (CLASS OFFICERS) ---
+  public getClassOfficers(classId: string): ClassOfficer[] {
+    return this.state.classOfficers.filter(o => o.classId === classId);
+  }
+
+  public assignClassOfficer(data: {
+    classId: string;
+    studentId: string;
+    role: OfficerRole;
+    customRoleTitle?: string;
+    duty?: string;
+    contactPhone?: string;
+  }): ClassOfficer {
+    const student = this.state.students.find(s => s.id === data.studentId);
+    if (!student) throw new Error('Học sinh không tồn tại');
+
+    // Remove existing officer for single-occupancy roles
+    const singleRoles: OfficerRole[] = ['LOP_TRUONG', 'LOP_PHO_HOC_TAP', 'LOP_PHO_KY_LUAT', 'LOP_PHO_LAO_DONG', 'LOP_PHO_PHONG_TRAO', 'THU_QUY'];
+    if (singleRoles.includes(data.role)) {
+      this.state.classOfficers = this.state.classOfficers.filter(
+        o => !(o.classId === data.classId && o.role === data.role)
+      );
+    }
+
+    const newOfficer: ClassOfficer = {
+      id: `OFF-${Date.now().toString().slice(-6)}-${Math.random().toString(36).substring(2, 5).toUpperCase()}`,
+      classId: data.classId,
+      studentId: data.studentId,
+      studentName: student.fullName,
+      studentCode: student.studentCode,
+      role: data.role,
+      customRoleTitle: data.customRoleTitle,
+      duty: data.duty || '',
+      contactPhone: data.contactPhone || student.parentPhone || '',
+      appointedDate: new Date().toISOString().split('T')[0]
+    };
+
+    this.state.classOfficers.push(newOfficer);
+    this.saveData();
+    return newOfficer;
+  }
+
+  public updateClassOfficer(id: string, data: Partial<ClassOfficer>): ClassOfficer | undefined {
+    const officer = this.state.classOfficers.find(o => o.id === id);
+    if (!officer) return undefined;
+    Object.assign(officer, data);
+    this.saveData();
+    return officer;
+  }
+
+  public removeClassOfficer(id: string): boolean {
+    const prevLen = this.state.classOfficers.length;
+    this.state.classOfficers = this.state.classOfficers.filter(o => o.id !== id);
+    if (this.state.classOfficers.length !== prevLen) {
+      this.saveData();
+      return true;
+    }
+    return false;
+  }
+
+  // --- SƠ ĐỒ CHỖ NGỒI (SEATING CHART) ---
+  public getSeatingChart(classId: string): SeatingChart {
+    let chart = this.state.seatingCharts.find(c => c.classId === classId);
+    if (!chart) {
+      const cls = this.state.classes.find(c => c.id === classId);
+      chart = {
+        id: `SEAT-${classId}`,
+        classId,
+        title: `Sơ đồ chỗ ngồi Lớp ${cls?.name || classId}`,
+        academicYear: cls?.academicYear || '2026 - 2027',
+        term: 'HK1',
+        rows: 5,
+        columns: 4,
+        seatsPerDesk: 2,
+        seats: [],
+        updatedAt: new Date().toISOString()
+      };
+      // Khởi tạo các ô ghế (5 hàng x 4 dãy x 2 bàn = 40 vị trí)
+      for (let r = 1; r <= 5; r++) {
+        for (let c = 1; c <= 4; c++) {
+          for (let s = 1; s <= 2; s++) {
+            chart.seats.push({
+              seatId: `R${r}-C${c}-S${s}`,
+              row: r,
+              column: c,
+              seatIndex: s
+            });
+          }
+        }
+      }
+      this.state.seatingCharts.push(chart);
+      this.saveData();
+    } else if (!chart.seats || chart.seats.length === 0) {
+      chart.seats = [];
+      const rows = chart.rows || 5;
+      const cols = chart.columns || 4;
+      const spd = chart.seatsPerDesk || 2;
+      for (let r = 1; r <= rows; r++) {
+        for (let c = 1; c <= cols; c++) {
+          for (let s = 1; s <= spd; s++) {
+            chart.seats.push({
+              seatId: `R${r}-C${c}-S${s}`,
+              row: r,
+              column: c,
+              seatIndex: s
+            });
+          }
+        }
+      }
+      this.saveData();
+    }
+    return chart;
+  }
+
+  public saveSeatingChart(data: SeatingChart): SeatingChart {
+    const idx = this.state.seatingCharts.findIndex(c => c.classId === data.classId);
+    data.updatedAt = new Date().toISOString();
+    if (idx !== -1) {
+      this.state.seatingCharts[idx] = data;
+    } else {
+      this.state.seatingCharts.push(data);
+    }
+    this.saveData();
+    return data;
+  }
+
+  public updateSeatAssignment(classId: string, seatId: string, studentId?: string, note?: string): SeatingChart {
+    const chart = this.getSeatingChart(classId);
+    
+    // Nếu gán học sinh vào ghế mới, hủy vị trí cũ của học sinh đó
+    if (studentId) {
+      chart.seats.forEach(s => {
+        if (s.studentId === studentId) {
+          s.studentId = undefined;
+          s.studentName = undefined;
+          s.studentCode = undefined;
+        }
+      });
+    }
+
+    const seat = chart.seats.find(s => s.seatId === seatId);
+    if (seat) {
+      if (studentId) {
+        const student = this.state.students.find(st => st.id === studentId);
+        seat.studentId = studentId;
+        seat.studentName = student?.fullName || '';
+        seat.studentCode = student?.studentCode || '';
+      } else {
+        seat.studentId = undefined;
+        seat.studentName = undefined;
+        seat.studentCode = undefined;
+      }
+      if (note !== undefined) seat.note = note;
+    }
+
+    chart.updatedAt = new Date().toISOString();
+    this.saveData();
+    return chart;
+  }
+
+  public swapSeats(classId: string, seatIdA: string, seatIdB: string): SeatingChart {
+    const chart = this.getSeatingChart(classId);
+    const seatA = chart.seats.find(s => s.seatId === seatIdA);
+    const seatB = chart.seats.find(s => s.seatId === seatIdB);
+    if (!seatA || !seatB) throw new Error('Không tìm thấy vị trí ghế');
+
+    const tempStudentId = seatA.studentId;
+    const tempStudentName = seatA.studentName;
+    const tempStudentCode = seatA.studentCode;
+    const tempNote = seatA.note;
+
+    seatA.studentId = seatB.studentId;
+    seatA.studentName = seatB.studentName;
+    seatA.studentCode = seatB.studentCode;
+    seatA.note = seatB.note;
+
+    seatB.studentId = tempStudentId;
+    seatB.studentName = tempStudentName;
+    seatB.studentCode = tempStudentCode;
+    seatB.note = tempNote;
+
+    chart.updatedAt = new Date().toISOString();
+    this.saveData();
+    return chart;
+  }
+
+  public autoArrangeSeats(classId: string, mode: 'byGroup' | 'alternatingGender' | 'alphabetical' | 'clear'): SeatingChart {
+    const chart = this.getSeatingChart(classId);
+    
+    // Reset all seats
+    chart.seats.forEach(s => {
+      s.studentId = undefined;
+      s.studentName = undefined;
+      s.studentCode = undefined;
+    });
+
+    if (mode === 'clear') {
+      chart.updatedAt = new Date().toISOString();
+      this.saveData();
+      return chart;
+    }
+
+    const students = this.state.students.filter(s => s.classId === classId && s.status === 'active');
+    
+    if (mode === 'alphabetical') {
+      students.sort((a, b) => a.fullName.localeCompare(b.fullName, 'vi'));
+      students.forEach((stu, idx) => {
+        if (idx < chart.seats.length) {
+          chart.seats[idx].studentId = stu.id;
+          chart.seats[idx].studentName = stu.fullName;
+          chart.seats[idx].studentCode = stu.studentCode;
+        }
+      });
+    } else if (mode === 'alternatingGender') {
+      const males = students.filter(s => s.gender === 'male');
+      const females = students.filter(s => s.gender === 'female');
+      const combined: Student[] = [];
+      const maxLen = Math.max(males.length, females.length);
+      for (let i = 0; i < maxLen; i++) {
+        if (i < males.length) combined.push(males[i]);
+        if (i < females.length) combined.push(females[i]);
+      }
+      combined.forEach((stu, idx) => {
+        if (idx < chart.seats.length) {
+          chart.seats[idx].studentId = stu.id;
+          chart.seats[idx].studentName = stu.fullName;
+          chart.seats[idx].studentCode = stu.studentCode;
+        }
+      });
+    } else if (mode === 'byGroup') {
+      const groups = this.state.emulationGroups.filter(g => g.MaLop === classId);
+      const groupMembers = this.state.groupMembers;
+      const sortedByGroup: Student[] = [];
+      
+      groups.forEach(g => {
+        const studentIdsInG = groupMembers.filter(m => m.MaTo === g.MaTo).map(m => m.MaHS);
+        const stisInG = students.filter(s => studentIdsInG.includes(s.id));
+        stisInG.sort((a, b) => a.fullName.localeCompare(b.fullName, 'vi'));
+        sortedByGroup.push(...stisInG);
+      });
+
+      const unassigned = students.filter(s => !sortedByGroup.some(sg => sg.id === s.id));
+      sortedByGroup.push(...unassigned);
+
+      sortedByGroup.forEach((stu, idx) => {
+        if (idx < chart.seats.length) {
+          chart.seats[idx].studentId = stu.id;
+          chart.seats[idx].studentName = stu.fullName;
+          chart.seats[idx].studentCode = stu.studentCode;
+        }
+      });
+    }
+
+    chart.updatedAt = new Date().toISOString();
+    this.saveData();
+    return chart;
+  }
+
   // --- RESET & BACKUP ---
   public resetToInitialData(): DatabaseState {
     this.state = {
@@ -1338,8 +1772,16 @@ export class ClassroomStore {
       emulationRecords: JSON.parse(JSON.stringify(initialEmulationRecords)),
       weeklyStudentSummaries: JSON.parse(JSON.stringify(initialWeeklyStudentSummaries)),
       weeklyGroupSummaries: JSON.parse(JSON.stringify(initialWeeklyGroupSummaries)),
+      classOfficers: JSON.parse(JSON.stringify(initialClassOfficers)),
+      seatingCharts: JSON.parse(JSON.stringify(initialSeatingCharts)),
       lastUpdated: new Date().toISOString()
     };
+    // Ensure seating charts have valid seats grid
+    this.state.seatingCharts.forEach(c => {
+      if (!c.seats || c.seats.length === 0) {
+        this.autoArrangeSeats(c.classId, 'byGroup');
+      }
+    });
     this.saveData();
     return this.state;
   }

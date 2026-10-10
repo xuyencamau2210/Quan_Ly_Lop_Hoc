@@ -24,6 +24,7 @@ interface ClassesViewProps {
   onRefresh: () => void;
   onSelectClassForAttendance: (classId: string) => void;
   onSelectClassForEmulation?: (classId: string) => void;
+  onSelectClassForOrganization?: (classId: string) => void;
 }
 
 export const ClassesView: React.FC<ClassesViewProps> = ({
@@ -31,7 +32,8 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
   students,
   onRefresh,
   onSelectClassForAttendance,
-  onSelectClassForEmulation
+  onSelectClassForEmulation,
+  onSelectClassForOrganization
 }) => {
   const { success, error } = useToast();
   const [search, setSearch] = useState('');
@@ -289,22 +291,31 @@ export const ClassesView: React.FC<ClassesViewProps> = ({
                     Xem danh sách
                   </button>
 
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => onSelectClassForAttendance(cls.id)}
-                      className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors"
-                    >
-                      Điểm danh
-                    </button>
-                    {onSelectClassForEmulation && (
+                    <div className="flex items-center gap-1.5">
+                      {onSelectClassForOrganization && (
+                        <button
+                          onClick={() => onSelectClassForOrganization(cls.id)}
+                          className="px-2 py-1 text-xs font-semibold rounded-lg bg-teal-50 text-teal-800 hover:bg-teal-100 transition-colors"
+                          title="Tổ chức lớp & Sơ đồ chỗ ngồi"
+                        >
+                          Tổ chức
+                        </button>
+                      )}
                       <button
-                        onClick={() => onSelectClassForEmulation(cls.id)}
-                        className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 transition-colors"
+                        onClick={() => onSelectClassForAttendance(cls.id)}
+                        className="px-2 py-1 text-xs font-semibold rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors"
                       >
-                        Thi đua
+                        Điểm danh
                       </button>
-                    )}
-                  </div>
+                      {onSelectClassForEmulation && (
+                        <button
+                          onClick={() => onSelectClassForEmulation(cls.id)}
+                          className="px-2 py-1 text-xs font-semibold rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 transition-colors"
+                        >
+                          Thi đua
+                        </button>
+                      )}
+                    </div>
                 </div>
               </div>
             );

@@ -1,989 +1,1691 @@
 import { 
   Classroom, Student, AttendanceRecord, GradeItem, DocumentItem, AppSettings,
   EmulationCategory, EmulationGroup, GroupMember, EmulationPeriod, EmulationRecord,
-  WeeklyStudentSummary, WeeklyGroupSummary
-} from '../../src/types/index.ts';
+  WeeklyStudentSummary, WeeklyGroupSummary,
+  ClassOfficer, SeatingChart
+} from "../../src/types/index.ts";
 
 export const initialClasses: Classroom[] = [
   {
-    id: 'cls-10a1',
-    name: '10A1',
-    grade: 10,
-    academicYear: '2025 - 2026',
-    homeroomTeacher: 'Thầy Nguyễn Văn Nam',
-    room: 'P.201 - Nhà A',
-    maxStudents: 45,
-    note: 'Lớp chuyên Toán - Tin học',
-    createdAt: '2025-08-20T08:00:00Z'
-  },
-  {
-    id: 'cls-10a2',
-    name: '10A2',
-    grade: 10,
-    academicYear: '2025 - 2026',
-    homeroomTeacher: 'Cô Trần Thị Hương',
-    room: 'P.202 - Nhà A',
-    maxStudents: 45,
-    note: 'Lớp Tự nhiên (Lý - Hóa - Sinh)',
-    createdAt: '2025-08-20T08:30:00Z'
-  },
-  {
-    id: 'cls-11b1',
-    name: '11B1',
-    grade: 11,
-    academicYear: '2025 - 2026',
-    homeroomTeacher: 'Thầy Lê Hoàng Phúc',
-    room: 'P.301 - Nhà B',
-    maxStudents: 42,
-    note: 'Lớp Xã hội & Ngoại ngữ',
-    createdAt: '2025-08-21T09:00:00Z'
-  },
-  {
-    id: 'cls-12c3',
-    name: '12C3',
-    grade: 12,
-    academicYear: '2025 - 2026',
-    homeroomTeacher: 'Cô Phạm Minh Châu',
-    room: 'P.403 - Nhà C',
-    maxStudents: 40,
-    note: 'Lớp ôn thi Tốt nghiệp THPT & Đại học',
-    createdAt: '2025-08-22T08:15:00Z'
+    "id": "10c2",
+    "name": "10C2",
+    "grade": 10,
+    "academicYear": "2026 - 2027",
+    "homeroomTeacher": "Nguyễn Văn Xuyên",
+    "room": "P.02 - Phan Hiệu Long Mỹ",
+    "maxStudents": 45,
+    "studentCount": 39,
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.077Z"
   }
 ];
 
 export const initialStudents: Student[] = [
-  // 10A1
   {
-    id: 'stu-101',
-    studentCode: 'HS251001',
-    fullName: 'Nguyễn Văn An',
-    gender: 'male',
-    birthDate: '2010-03-15',
-    classId: 'cls-10a1',
-    className: '10A1',
-    parentName: 'Nguyễn Văn Bình',
-    parentPhone: '0912345678',
-    address: '123 Phố Huế, Q. Hai Bà Trưng, Hà Nội',
-    status: 'active',
-    note: 'Lớp trưởng, học tốt môn Toán',
-    createdAt: '2025-08-25T07:00:00Z'
+    "id": "HS26001",
+    "studentCode": "HS26001",
+    "fullName": "Lê Bảo An",
+    "gender": "male",
+    "birthDate": "2011-09-19",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thị Thùy Trang",
+    "parentPhone": "",
+    "address": "KV 2, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
   },
   {
-    id: 'stu-102',
-    studentCode: 'HS251002',
-    fullName: 'Trần Thị Mai',
-    gender: 'female',
-    birthDate: '2010-06-22',
-    classId: 'cls-10a1',
-    className: '10A1',
-    parentName: 'Trần Văn Cường',
-    parentPhone: '0987654321',
-    address: '45 Đường Láng, Q. Đống Đa, Hà Nội',
-    status: 'active',
-    note: 'Lớp phó học tập',
-    createdAt: '2025-08-25T07:05:00Z'
+    "id": "HS26002",
+    "studentCode": "HS26002",
+    "fullName": "Nguyễn Phạm Gia An",
+    "gender": "male",
+    "birthDate": "2010-12-21",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Phạm Thị Thanh Quyên",
+    "parentPhone": "",
+    "address": "KV Bình Tân, Phường Long Bình, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
   },
   {
-    id: 'stu-103',
-    studentCode: 'HS251003',
-    fullName: 'Lê Hoàng Long',
-    gender: 'male',
-    birthDate: '2010-09-08',
-    classId: 'cls-10a1',
-    className: '10A1',
-    parentName: 'Lê Thanh Hải',
-    parentPhone: '0903112233',
-    address: '88 Nguyễn Trãi, Q. Thanh Xuân, Hà Nội',
-    status: 'active',
-    note: 'Bí thư đoàn, năng động',
-    createdAt: '2025-08-25T07:10:00Z'
+    "id": "HS26003",
+    "studentCode": "HS26003",
+    "fullName": "Lê Duyên Anh",
+    "gender": "female",
+    "birthDate": "2011-06-01",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Lê Thị Quế Anh",
+    "parentPhone": "",
+    "address": "KV 2, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
   },
   {
-    id: 'stu-104',
-    studentCode: 'HS251004',
-    fullName: 'Phạm Thu Hương',
-    gender: 'female',
-    birthDate: '2010-11-12',
-    classId: 'cls-10a1',
-    className: '10A1',
-    parentName: 'Phạm Văn Hùng',
-    parentPhone: '0978998877',
-    address: '15 Kim Mã, Q. Ba Đình, Hà Nội',
-    status: 'active',
-    note: 'Đạt giải Nhì Tiếng Anh cấp trường',
-    createdAt: '2025-08-25T07:15:00Z'
+    "id": "HS26004",
+    "studentCode": "HS26004",
+    "fullName": "Lê Vũ Bằng",
+    "gender": "male",
+    "birthDate": "2011-10-11",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thị Tuyết",
+    "parentPhone": "",
+    "address": "KV 4, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
   },
   {
-    id: 'stu-105',
-    studentCode: 'HS251005',
-    fullName: 'Đỗ Minh Quân',
-    gender: 'male',
-    birthDate: '2010-01-20',
-    classId: 'cls-10a1',
-    className: '10A1',
-    parentName: 'Đỗ Khắc Nam',
-    parentPhone: '0934556677',
-    address: '72 Trần Phú, Hà Đông, Hà Nội',
-    status: 'active',
-    note: 'Đội tuyển bóng rổ trường',
-    createdAt: '2025-08-25T07:20:00Z'
-  },
-
-  // 10A2
-  {
-    id: 'stu-106',
-    studentCode: 'HS251006',
-    fullName: 'Vũ Ngọc Ánh',
-    gender: 'female',
-    birthDate: '2010-04-18',
-    classId: 'cls-10a2',
-    className: '10A2',
-    parentName: 'Vũ Văn Toàn',
-    parentPhone: '0961234890',
-    address: '56 Cầu Giấy, Q. Cầu Giấy, Hà Nội',
-    status: 'active',
-    note: 'Yêu thích môn Hóa học',
-    createdAt: '2025-08-26T08:00:00Z'
+    "id": "HS26005",
+    "studentCode": "HS26005",
+    "fullName": "Dương Minh Châu",
+    "gender": "female",
+    "birthDate": "2011-07-05",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Phạm Ngọc Thanh Tuyền",
+    "parentPhone": "",
+    "address": "KV 5, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
   },
   {
-    id: 'stu-107',
-    studentCode: 'HS251007',
-    fullName: 'Hoàng Quốc Bảo',
-    gender: 'male',
-    birthDate: '2010-08-30',
-    classId: 'cls-10a2',
-    className: '10A2',
-    parentName: 'Hoàng Quốc Việt',
-    parentPhone: '0918765432',
-    address: '102 Hoàng Hoa Thám, Ba Đình, Hà Nội',
-    status: 'active',
-    note: 'Thành viên CLB Khoa học',
-    createdAt: '2025-08-26T08:05:00Z'
+    "id": "HS26006",
+    "studentCode": "HS26006",
+    "fullName": "Nguyễn Thị Chành Đa",
+    "gender": "female",
+    "birthDate": "2011-07-27",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Quách Thị Sà La",
+    "parentPhone": "",
+    "address": "KV 2, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
   },
   {
-    id: 'stu-108',
-    studentCode: 'HS251008',
-    fullName: 'Bùi Khánh Linh',
-    gender: 'female',
-    birthDate: '2010-12-05',
-    classId: 'cls-10a2',
-    className: '10A2',
-    parentName: 'Bùi Văn Dũng',
-    parentPhone: '0945678901',
-    address: '29 Tây Sơn, Q. Đống Đa, Hà Nội',
-    status: 'active',
-    note: 'Lớp phó đời sống',
-    createdAt: '2025-08-26T08:10:00Z'
-  },
-
-  // 11B1
-  {
-    id: 'stu-109',
-    studentCode: 'HS241009',
-    fullName: 'Đặng Thanh Tâm',
-    gender: 'female',
-    birthDate: '2009-02-14',
-    classId: 'cls-11b1',
-    className: '11B1',
-    parentName: 'Đặng Quốc Tuấn',
-    parentPhone: '0908889999',
-    address: '14 Phan Đình Phùng, Ba Đình, Hà Nội',
-    status: 'active',
-    note: 'Điểm tổng kết Văn 9.2',
-    createdAt: '2025-08-27T08:00:00Z'
+    "id": "HS26007",
+    "studentCode": "HS26007",
+    "fullName": "Võ Thành Đạt",
+    "gender": "male",
+    "birthDate": "2011-11-11",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Tạ Phương Hồng Trinh",
+    "parentPhone": "",
+    "address": "KV 9, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
   },
   {
-    id: 'stu-110',
-    studentCode: 'HS241010',
-    fullName: 'Trương Gia Huy',
-    gender: 'male',
-    birthDate: '2009-07-19',
-    classId: 'cls-11b1',
-    className: '11B1',
-    parentName: 'Trương Văn Nghĩa',
-    parentPhone: '0977112244',
-    address: '63 Lê Duẩn, Q. Hoàn Kiếm, Hà Nội',
-    status: 'active',
-    note: 'Thành viên CLB Nhiếp ảnh',
-    createdAt: '2025-08-27T08:05:00Z'
-  },
-
-  // 12C3
-  {
-    id: 'stu-111',
-    studentCode: 'HS231011',
-    fullName: 'Lý Diệu Thảo',
-    gender: 'female',
-    birthDate: '2008-05-25',
-    classId: 'cls-12c3',
-    className: '12C3',
-    parentName: 'Lý Quốc Cường',
-    parentPhone: '0913554433',
-    address: '89 Giảng Võ, Q. Ba Đình, Hà Nội',
-    status: 'active',
-    note: 'Học bổng thủ khoa khối 11',
-    createdAt: '2025-08-28T08:00:00Z'
+    "id": "HS26008",
+    "studentCode": "HS26008",
+    "fullName": "Nguyễn Huỳnh Hải Đăng",
+    "gender": "male",
+    "birthDate": "2011-08-24",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Huỳnh Thị Trang",
+    "parentPhone": "",
+    "address": "Ấp Cây Dương A, Xã Long Điền, Tỉnh Cà Mau",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
   },
   {
-    id: 'stu-112',
-    studentCode: 'HS231012',
-    fullName: 'Ngô Đức Thắng',
-    gender: 'male',
-    birthDate: '2008-10-10',
-    classId: 'cls-12c3',
-    className: '12C3',
-    parentName: 'Ngô Đức Thành',
-    parentPhone: '0922334455',
-    address: '210 Bạch Mai, Hai Bà Trưng, Hà Nội',
-    status: 'active',
-    note: 'Mục tiêu Đại học Bách Khoa',
-    createdAt: '2025-08-28T08:10:00Z'
+    "id": "HS26009",
+    "studentCode": "HS26009",
+    "fullName": "Phan Quốc Đoàn",
+    "gender": "male",
+    "birthDate": "2011-05-03",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Lê Thị Màu",
+    "parentPhone": "",
+    "address": "Ấp Trà Ban Nhỏ, Xã Xã Phiên, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26010",
+    "studentCode": "HS26010",
+    "fullName": "Lý Gia Đức",
+    "gender": "male",
+    "birthDate": "2008-10-10",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Huỳnh Thị Kim Thi",
+    "parentPhone": "",
+    "address": "KV 1, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26011",
+    "studentCode": "HS26011",
+    "fullName": "Hồ Gia Huy",
+    "gender": "male",
+    "birthDate": "2011-04-29",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Hồ Thị Chi",
+    "parentPhone": "",
+    "address": "KV 6, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26012",
+    "studentCode": "HS26012",
+    "fullName": "Phạm Quốc Hưng",
+    "gender": "male",
+    "birthDate": "2011-06-19",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thị Kim Loan",
+    "parentPhone": "",
+    "address": "KV 4, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26013",
+    "studentCode": "HS26013",
+    "fullName": "Nguyễn Văn Kiệt",
+    "gender": "male",
+    "birthDate": "2011-05-19",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thị Ngọc Đoan",
+    "parentPhone": "",
+    "address": "Ấp Cái Nhum, Xã Xà Phiên, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26014",
+    "studentCode": "HS26014",
+    "fullName": "Nguyễn Tuấn Khang",
+    "gender": "male",
+    "birthDate": "2011-10-13",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Đặng Thị Hiền",
+    "parentPhone": "",
+    "address": "Ấp 10, Xã Vị Thủy, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26015",
+    "studentCode": "HS26015",
+    "fullName": "Nguyễn Viết Lãm",
+    "gender": "male",
+    "birthDate": "2011-03-14",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Kim Nguyện",
+    "parentPhone": "",
+    "address": "KV Tân Thạnh, Phường Long Phú 1, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26016",
+    "studentCode": "HS26016",
+    "fullName": "Ngô Thị Cẩm Ly",
+    "gender": "female",
+    "birthDate": "2011-08-05",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Trần Thị Nhí",
+    "parentPhone": "",
+    "address": "Ấp Thuận Hưng, Xã Xã Phiên, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26017",
+    "studentCode": "HS26017",
+    "fullName": "Lê Quốc Minh",
+    "gender": "male",
+    "birthDate": "2010-05-05",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thị Dừa",
+    "parentPhone": "",
+    "address": "Ấp 2, Xã Vĩnh Thuận Đông, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26018",
+    "studentCode": "HS26018",
+    "fullName": "Nguyễn Thị Bé My",
+    "gender": "female",
+    "birthDate": "2010-07-22",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thị Rớt",
+    "parentPhone": "",
+    "address": "Ấp Trà Ban Nhỏ, Xã Xã Phiên, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26019",
+    "studentCode": "HS26019",
+    "fullName": "Nguyễn Thị Hà My",
+    "gender": "female",
+    "birthDate": "2011-06-07",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Đinh Thị Như Ý",
+    "parentPhone": "",
+    "address": "KV Tân Trị 1, Phường Long Phú 1, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26020",
+    "studentCode": "HS26020",
+    "fullName": "Nguyễn Hương Nguyên",
+    "gender": "female",
+    "birthDate": "2011-01-01",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Đinh Thị Thu Hương",
+    "parentPhone": "",
+    "address": "KV 1, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26021",
+    "studentCode": "HS26021",
+    "fullName": "Lý Hữu Nhân",
+    "gender": "male",
+    "birthDate": "2011-12-28",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Lê Thị Chính",
+    "parentPhone": "",
+    "address": "KV 10, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26022",
+    "studentCode": "HS26022",
+    "fullName": "Phan Thành Nhân",
+    "gender": "male",
+    "birthDate": "2011-08-31",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thúy Liễu",
+    "parentPhone": "",
+    "address": "KV 7, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26023",
+    "studentCode": "HS26023",
+    "fullName": "Phan Tiến Nhật",
+    "gender": "male",
+    "birthDate": "2011-07-04",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Trần Thị Diệu",
+    "parentPhone": "",
+    "address": "KV 4, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26024",
+    "studentCode": "HS26024",
+    "fullName": "Huỳnh Như",
+    "gender": "female",
+    "birthDate": "2011-01-14",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Võ Mộng Đào",
+    "parentPhone": "",
+    "address": "KV 10, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26025",
+    "studentCode": "HS26025",
+    "fullName": "Trần Thành Phát",
+    "gender": "male",
+    "birthDate": "2011-07-06",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Võ Thị Bé Mai",
+    "parentPhone": "",
+    "address": "Ấp 10, Xã Vĩnh Viễn, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26026",
+    "studentCode": "HS26026",
+    "fullName": "Trần Phong Phú",
+    "gender": "male",
+    "birthDate": "2011-01-28",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Phạm Thị Cà Mol",
+    "parentPhone": "",
+    "address": "Ấp Thuận Hưng, Xã Xã Phiên, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26027",
+    "studentCode": "HS26027",
+    "fullName": "Nguyễn Hoàng Phúc",
+    "gender": "male",
+    "birthDate": "2011-04-06",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Bùi Thị Hồng Hạnh",
+    "parentPhone": "",
+    "address": "Ấp 11, Xã Vĩnh Viễn, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26028",
+    "studentCode": "HS26028",
+    "fullName": "Trương Nhật Quang",
+    "gender": "male",
+    "birthDate": "2011-08-21",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thị Ngọc Hân",
+    "parentPhone": "",
+    "address": "Ấp Thuận Hưng, Xã Xã Phiên, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26029",
+    "studentCode": "HS26029",
+    "fullName": "Nguyễn Văn Tình",
+    "gender": "male",
+    "birthDate": "2011-08-31",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thị May",
+    "parentPhone": "",
+    "address": "Ấp Cao Hột, Xã Xã Phiên, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26030",
+    "studentCode": "HS26030",
+    "fullName": "Trần Gia Tường",
+    "gender": "male",
+    "birthDate": "2011-04-06",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Phạm Kim Linh",
+    "parentPhone": "",
+    "address": "Ấp 5, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26031",
+    "studentCode": "HS26031",
+    "fullName": "Hồ Thị Ngọc Thảo",
+    "gender": "female",
+    "birthDate": "2011-07-21",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thị Mỹ Thu",
+    "parentPhone": "",
+    "address": "KV Bình An, Phường Long Bình, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26032",
+    "studentCode": "HS26032",
+    "fullName": "Trần Gia Thiện",
+    "gender": "male",
+    "birthDate": "2011-07-29",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Triệu Hồ Huyền Trân",
+    "parentPhone": "",
+    "address": "KV 4, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26033",
+    "studentCode": "HS26033",
+    "fullName": "Nguyễn Đức Thọ",
+    "gender": "male",
+    "birthDate": "2011-11-01",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Lộc Thị Quyên",
+    "parentPhone": "",
+    "address": "KV 4, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26034",
+    "studentCode": "HS26034",
+    "fullName": "Trần Bá Thời",
+    "gender": "male",
+    "birthDate": "2010-08-29",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thị Tưởng",
+    "parentPhone": "",
+    "address": "KV 1, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26035",
+    "studentCode": "HS26035",
+    "fullName": "Phạm Anh Thư",
+    "gender": "female",
+    "birthDate": "2011-05-15",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Phạm Thị Hằng",
+    "parentPhone": "",
+    "address": "KV 4, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26036",
+    "studentCode": "HS26036",
+    "fullName": "Lê Bích Trâm",
+    "gender": "female",
+    "birthDate": "2011-10-28",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Lê Bích Huyền",
+    "parentPhone": "",
+    "address": "KV 3, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26037",
+    "studentCode": "HS26037",
+    "fullName": "Phạm Thị Yến Vi",
+    "gender": "female",
+    "birthDate": "2011-06-06",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Nguyễn Thị Kiều",
+    "parentPhone": "",
+    "address": "Ấp Thuận Phú, Xã Xã Phiên, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26038",
+    "studentCode": "HS26038",
+    "fullName": "Phan Trường Vũ",
+    "gender": "male",
+    "birthDate": "2010-01-19",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Lê Thị Cẩm Ly",
+    "parentPhone": "",
+    "address": "KV 3, Phường Long Mỹ, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
+  },
+  {
+    "id": "HS26039",
+    "studentCode": "HS26039",
+    "fullName": "Ngô Thị Kim Yến",
+    "gender": "female",
+    "birthDate": "2011-07-28",
+    "classId": "10c2",
+    "className": "10C2",
+    "parentName": "Kim Thị Thủy",
+    "parentPhone": "",
+    "address": "Ấp Thuận Phú, Xã Xã Phiên, TP Cần Thơ",
+    "status": "active",
+    "note": "",
+    "createdAt": "2026-10-09T15:55:42.413Z"
   }
 ];
 
-export const initialAttendance: AttendanceRecord[] = [
-  // 10A1 attendance today
-  {
-    id: 'att-1',
-    classId: 'cls-10a1',
-    date: '2026-10-09',
-    studentId: 'stu-101',
-    studentName: 'Nguyễn Văn An',
-    studentCode: 'HS251001',
-    status: 'present',
-    note: '',
-    updatedAt: '2026-10-09T07:15:00Z'
-  },
-  {
-    id: 'att-2',
-    classId: 'cls-10a1',
-    date: '2026-10-09',
-    studentId: 'stu-102',
-    studentName: 'Trần Thị Mai',
-    studentCode: 'HS251002',
-    status: 'present',
-    note: '',
-    updatedAt: '2026-10-09T07:15:00Z'
-  },
-  {
-    id: 'att-3',
-    classId: 'cls-10a1',
-    date: '2026-10-09',
-    studentId: 'stu-103',
-    studentName: 'Lê Hoàng Long',
-    studentCode: 'HS251003',
-    status: 'excused',
-    note: 'Phụ huynh xin phép đi khám mắt',
-    updatedAt: '2026-10-09T07:15:00Z'
-  },
-  {
-    id: 'att-4',
-    classId: 'cls-10a1',
-    date: '2026-10-09',
-    studentId: 'stu-104',
-    studentName: 'Phạm Thu Hương',
-    studentCode: 'HS251004',
-    status: 'present',
-    note: '',
-    updatedAt: '2026-10-09T07:15:00Z'
-  },
-  {
-    id: 'att-5',
-    classId: 'cls-10a1',
-    date: '2026-10-09',
-    studentId: 'stu-105',
-    studentName: 'Đỗ Minh Quân',
-    studentCode: 'HS251005',
-    status: 'late',
-    note: 'Đến muộn 10 phút (xe hỏng)',
-    updatedAt: '2026-10-09T07:25:00Z'
-  },
+export const initialAttendance: AttendanceRecord[] = [];
 
-  // 10A2 attendance today
-  {
-    id: 'att-6',
-    classId: 'cls-10a2',
-    date: '2026-10-09',
-    studentId: 'stu-106',
-    studentName: 'Vũ Ngọc Ánh',
-    studentCode: 'HS251006',
-    status: 'present',
-    note: '',
-    updatedAt: '2026-10-09T07:20:00Z'
-  },
-  {
-    id: 'att-7',
-    classId: 'cls-10a2',
-    date: '2026-10-09',
-    studentId: 'stu-107',
-    studentName: 'Hoàng Quốc Bảo',
-    studentCode: 'HS251007',
-    status: 'present',
-    note: '',
-    updatedAt: '2026-10-09T07:20:00Z'
-  },
-  {
-    id: 'att-8',
-    classId: 'cls-10a2',
-    date: '2026-10-09',
-    studentId: 'stu-108',
-    studentName: 'Bùi Khánh Linh',
-    studentCode: 'HS251008',
-    status: 'unexcused',
-    note: 'Chưa có lý do, GVCN đang liên hệ PH',
-    updatedAt: '2026-10-09T07:20:00Z'
-  }
-];
+export const initialGrades: GradeItem[] = [];
 
-export const initialGrades: GradeItem[] = [
-  // 10A1 - Môn Toán
-  {
-    id: 'gr-101',
-    studentId: 'stu-101',
-    studentName: 'Nguyễn Văn An',
-    studentCode: 'HS251001',
-    classId: 'cls-10a1',
-    subject: 'Toán học',
-    semester: 'HK1',
-    oral: [9.0, 9.5],
-    test15: [8.5, 9.0],
-    test45: 8.8,
-    finalExam: 9.0,
-    average: 8.9,
-    rank: 'Xuất sắc',
-    note: 'Bài kiểm tra tư duy rất tốt',
-    updatedAt: '2026-10-05T10:00:00Z'
-  },
-  {
-    id: 'gr-102',
-    studentId: 'stu-102',
-    studentName: 'Trần Thị Mai',
-    studentCode: 'HS251002',
-    classId: 'cls-10a1',
-    subject: 'Toán học',
-    semester: 'HK1',
-    oral: [8.0, 8.5],
-    test15: [8.0, 8.5],
-    test45: 8.2,
-    finalExam: 8.5,
-    average: 8.3,
-    rank: 'Giỏi',
-    note: 'Chăm chỉ, làm bài cẩn thận',
-    updatedAt: '2026-10-05T10:00:00Z'
-  },
-  {
-    id: 'gr-103',
-    studentId: 'stu-103',
-    studentName: 'Lê Hoàng Long',
-    studentCode: 'HS251003',
-    classId: 'cls-10a1',
-    subject: 'Toán học',
-    semester: 'HK1',
-    oral: [7.5, 8.0],
-    test15: [7.0, 7.5],
-    test45: 7.5,
-    finalExam: 7.8,
-    average: 7.6,
-    rank: 'Khá',
-    note: 'Cần ôn thêm phần hình học không gian',
-    updatedAt: '2026-10-05T10:00:00Z'
-  },
-  {
-    id: 'gr-104',
-    studentId: 'stu-104',
-    studentName: 'Phạm Thu Hương',
-    studentCode: 'HS251004',
-    classId: 'cls-10a1',
-    subject: 'Toán học',
-    semester: 'HK1',
-    oral: [8.5, 9.0],
-    test15: [8.0, 8.5],
-    test45: 8.0,
-    finalExam: 8.2,
-    average: 8.2,
-    rank: 'Giỏi',
-    note: '',
-    updatedAt: '2026-10-05T10:00:00Z'
-  },
-  {
-    id: 'gr-105',
-    studentId: 'stu-105',
-    studentName: 'Đỗ Minh Quân',
-    studentCode: 'HS251005',
-    classId: 'cls-10a1',
-    subject: 'Toán học',
-    semester: 'HK1',
-    oral: [6.5, 7.0],
-    test15: [6.5, 6.0],
-    test45: 6.8,
-    finalExam: 7.0,
-    average: 6.7,
-    rank: 'Trung bình',
-    note: 'Cần kèm thêm giải tích cơ bản',
-    updatedAt: '2026-10-05T10:00:00Z'
-  },
-
-  // 10A1 - Môn Ngữ văn
-  {
-    id: 'gr-106',
-    studentId: 'stu-101',
-    studentName: 'Nguyễn Văn An',
-    studentCode: 'HS251001',
-    classId: 'cls-10a1',
-    subject: 'Ngữ văn',
-    semester: 'HK1',
-    oral: [8.0],
-    test15: [8.0, 8.5],
-    test45: 8.0,
-    finalExam: 8.0,
-    average: 8.1,
-    rank: 'Giỏi',
-    note: '',
-    updatedAt: '2026-10-06T11:00:00Z'
-  },
-  {
-    id: 'gr-107',
-    studentId: 'stu-102',
-    studentName: 'Trần Thị Mai',
-    studentCode: 'HS251002',
-    classId: 'cls-10a1',
-    subject: 'Ngữ văn',
-    semester: 'HK1',
-    oral: [9.0],
-    test15: [9.0, 8.5],
-    test45: 8.8,
-    finalExam: 9.0,
-    average: 8.9,
-    rank: 'Xuất sắc',
-    note: 'Văn phong biểu cảm xuất sắc',
-    updatedAt: '2026-10-06T11:00:00Z'
-  }
-];
-
-export const initialDocuments: DocumentItem[] = [
-  {
-    id: 'doc-1',
-    title: 'Phân phối chương trình Toán 10 - Năm học 2025-2026',
-    category: 'lesson_plan',
-    classId: 'cls-10a1',
-    className: '10A1',
-    subject: 'Toán học',
-    driveUrl: 'https://drive.google.com/drive/folders/1A_Toan10_GiaoAn_2025',
-    driveFileId: '1A_Toan10_GiaoAn_2025',
-    fileSize: '1.4 MB',
-    fileExtension: 'PDF',
-    uploadedBy: 'Thầy Nguyễn Văn Nam',
-    uploadedAt: '2025-09-01T08:00:00Z',
-    isGoogleDriveSynced: false,
-    description: 'Kế hoạch dạy học theo định hướng đổi mới phương pháp GDPT 2018'
-  },
-  {
-    id: 'doc-2',
-    title: 'Đề kiểm tra giữa kỳ 1 môn Toán (Có đáp án chi tiết)',
-    category: 'exam',
-    classId: 'cls-10a1',
-    className: '10A1',
-    subject: 'Toán học',
-    driveUrl: 'https://drive.google.com/file/d/1B_DeThiGK1_Toan10/view',
-    driveFileId: '1B_DeThiGK1_Toan10',
-    fileSize: '850 KB',
-    fileExtension: 'DOCX',
-    uploadedBy: 'Thầy Nguyễn Văn Nam',
-    uploadedAt: '2026-10-02T14:30:00Z',
-    isGoogleDriveSynced: false,
-    description: 'Bộ đề 4 mã đề trắc nghiệm và tự luận chuẩn ma trận'
-  },
-  {
-    id: 'doc-3',
-    title: 'Phiếu bài tập rèn luyện kỹ năng Hình học không gian',
-    category: 'assignment',
-    classId: 'cls-10a1',
-    className: '10A1',
-    subject: 'Toán học',
-    driveUrl: 'https://drive.google.com/file/d/1C_BaiTapHinhHoc_10/view',
-    driveFileId: '1C_BaiTapHinhHoc_10',
-    fileSize: '2.1 MB',
-    fileExtension: 'PDF',
-    uploadedBy: 'Thầy Nguyễn Văn Nam',
-    uploadedAt: '2026-10-05T09:15:00Z',
-    isGoogleDriveSynced: false,
-    description: '50 bài tập nâng cao dành cho học sinh khá giỏi'
-  },
-  {
-    id: 'doc-4',
-    title: 'Sổ tay nội quy lớp học và tiêu chí rèn luyện đạo đức',
-    category: 'handbook',
-    classId: 'cls-10a1',
-    className: '10A1',
-    driveUrl: 'https://drive.google.com/file/d/1D_NoiQuyLop_10A1/view',
-    driveFileId: '1D_NoiQuyLop_10A1',
-    fileSize: '540 KB',
-    fileExtension: 'PDF',
-    uploadedBy: 'Ban Giám Hiệu',
-    uploadedAt: '2025-08-30T10:00:00Z',
-    isGoogleDriveSynced: false,
-    description: 'Ban hành áp dụng cho toàn bộ học sinh lớp 10A1'
-  },
-  {
-    id: 'doc-5',
-    title: 'Thông báo họp phụ huynh học sinh đầu năm',
-    category: 'notice',
-    classId: 'cls-10a2',
-    className: '10A2',
-    driveUrl: 'https://drive.google.com/file/d/1E_ThongBaoHopPH_10A2/view',
-    driveFileId: '1E_ThongBaoHopPH_10A2',
-    fileSize: '320 KB',
-    fileExtension: 'PDF',
-    uploadedBy: 'Cô Trần Thị Hương',
-    uploadedAt: '2025-09-05T16:00:00Z',
-    isGoogleDriveSynced: false,
-    description: 'Thư mời gửi phụ huynh học sinh lớp 10A2'
-  }
-];
+export const initialDocuments: DocumentItem[] = [];
 
 export const initialSettings: AppSettings = {
-  academicYear: '2025 - 2026',
-  currentSemester: 'HK1',
-  schoolName: 'Trường THPT Chuyên Nguyễn Huệ',
-  teacherName: 'Thầy Nguyễn Văn Nam',
-  teacherEmail: 'nam.nguyen@thptnguyenhue.edu.vn',
-  teacherPhone: '0912 345 678',
-  department: 'Tổ Toán - Tin học',
-  autoCalculateAverages: true,
-  storageMode: 'server_store',
-  googleSheets: {
-    sheetId: '1X_QUAN_LY_LOP_HOC_SHEET_DEMO_2026',
-    sheetName: 'DanhSach_Diem_DiemDanh_2025_2026',
-    connected: false,
-    lastSyncTime: undefined,
-    statusMessage: 'Chưa kích hoạt kết nối OAuth Google Sheets (Đang lưu trữ dữ liệu an toàn trên Server Store)'
+  "academicYear": "2026 - 2027",
+  "currentSemester": "HK1",
+  "schoolName": "Trung tâm GDNN - GDTX Hậu Giang",
+  "teacherName": "Nguyễn Văn Xuyên",
+  "teacherEmail": "xuyencamau2210@gmail.com",
+  "teacherPhone": "0932 987 246",
+  "department": "Tổ Lý - Hóa - Sinh",
+  "autoCalculateAverages": true,
+  "storageMode": "server_store",
+  "googleSheets": {
+    "sheetId": "138JvHJLhMRmPH4Xv114RLxN1u2FaeNql7zSO8RGbT0U",
+    "sheetName": "Quan_Ly_Lop_Hoc",
+    "connected": true,
+    "statusMessage": "Đã kết nối với tệp: \"Quan_Ly_Lop_Hoc\" (8 bảng chuẩn)"
   },
-  googleDrive: {
-    folderId: '1Y_CLASSROOM_DOCS_DRIVE_FOLDER_DEMO',
-    folderName: 'QuanLyLopHoc_TaiLieu_2025_2026',
-    connected: false,
-    lastSyncTime: undefined,
-    statusMessage: 'Chưa kích hoạt kết nối OAuth Google Drive (Đang quản lý liên kết tài liệu qua Server Repository)'
+  "googleDrive": {
+    "folderId": "1Y_CLASSROOM_DOCS_DRIVE_FOLDER_DEMO",
+    "folderName": "QuanLyLopHoc_TaiLieu_2025_2026",
+    "connected": false,
+    "statusMessage": "Chưa kích hoạt kết nối OAuth Google Drive (Đang quản lý liên kết tài liệu qua Server Repository)"
   }
 };
 
-// ==========================================
-// THI ĐUA VÀ VI PHẠM: INITIAL SEED DATA
-// ==========================================
-
 export const initialEmulationCategories: EmulationCategory[] = [
   {
-    MaLoi: 'DM-MUON',
-    TenLoi: 'Đi học muộn',
-    Loai: 'TRU',
-    Diem: 2,
-    MoTa: 'Đến lớp sau tiếng trống vào học hoặc điểm danh',
-    TrangThai: 'DANG_DUNG'
+    "MaLoi": "DM-MUON",
+    "TenLoi": "Đi học muộn",
+    "Loai": "TRU",
+    "Diem": 2,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
   },
   {
-    MaLoi: 'DM-BTVN',
-    TenLoi: 'Không làm bài tập',
-    Loai: 'TRU',
-    Diem: 2,
-    MoTa: 'Chưa hoàn thành bài tập về nhà theo yêu cầu giáo viên',
-    TrangThai: 'DANG_DUNG'
+    "MaLoi": "DM-BTVN",
+    "TenLoi": "Không làm bài tập",
+    "Loai": "TRU",
+    "Diem": 2,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
   },
   {
-    MaLoi: 'DM-NOICHUYEN',
-    TenLoi: 'Nói chuyện riêng',
-    Loai: 'TRU',
-    Diem: 1,
-    MoTa: 'Mất trật tự, làm việc riêng trong giờ học',
-    TrangThai: 'DANG_DUNG'
+    "MaLoi": "DM-NOICHUYEN",
+    "TenLoi": "Nói chuyện, mất trật tự",
+    "Loai": "TRU",
+    "Diem": 2,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
   },
   {
-    MaLoi: 'DM-DONGPHUC',
-    TenLoi: 'Không đồng phục đúng quy định',
-    Loai: 'TRU',
-    Diem: 1,
-    MoTa: 'Không mặc đúng đồng phục hoặc không đeo phù hiệu',
-    TrangThai: 'DANG_DUNG'
+    "MaLoi": "DM-DONGPHUC",
+    "TenLoi": "Không đồng phục",
+    "Loai": "TRU",
+    "Diem": 1,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
   },
   {
-    MaLoi: 'DM-HOCTOT',
-    TenLoi: 'Thành tích học tập tốt',
-    Loai: 'CONG',
-    Diem: 3,
-    MoTa: 'Đạt điểm 9, 10 trong giờ học hoặc phát biểu xuất sắc',
-    TrangThai: 'DANG_DUNG'
+    "MaLoi": "DM-HOCTOT",
+    "TenLoi": "Đạt điểm tốt",
+    "Loai": "CONG",
+    "Diem": 3,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
   },
   {
-    MaLoi: 'DM-GIUPBAN',
-    TenLoi: 'Giúp đỡ bạn',
-    Loai: 'CONG',
-    Diem: 3,
-    MoTa: 'Đôi bạn cùng tiến, hướng dẫn bài hoặc hỗ trợ bạn gặp khó khăn',
-    TrangThai: 'DANG_DUNG'
+    "MaLoi": "DM-GIUPBAN",
+    "TenLoi": "Phát biểu xây dựng bài",
+    "Loai": "CONG",
+    "Diem": 3,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
   },
   {
-    MaLoi: 'DM-VIECTOT',
-    TenLoi: 'Việc tốt nổi bật',
-    Loai: 'CONG',
-    Diem: 3,
-    MoTa: 'Nhặt được của rơi trả người đánh mất hoặc tích cực lao động',
-    TrangThai: 'DANG_DUNG'
+    "MaLoi": "DM-VIECTOT",
+    "TenLoi": "Tham gia phong trào tích cực",
+    "Loai": "CONG",
+    "Diem": 3,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
+  },
+  {
+    "MaLoi": "DM-587488-X4A",
+    "TenLoi": "Vắng không phép",
+    "Loai": "TRU",
+    "Diem": 3,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
+  },
+  {
+    "MaLoi": "DM-617664-6QR",
+    "TenLoi": "Vắng có phép",
+    "Loai": "TRU",
+    "Diem": 1,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
+  },
+  {
+    "MaLoi": "DM-663811-YNP",
+    "TenLoi": "Bỏ tiết",
+    "Loai": "TRU",
+    "Diem": 3,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
+  },
+  {
+    "MaLoi": "DM-940844-1SM",
+    "TenLoi": "Nói tục, chửi thề",
+    "Loai": "TRU",
+    "Diem": 3,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
+  },
+  {
+    "MaLoi": "DM-123235-40E",
+    "TenLoi": "Sử dụng điện thoại",
+    "Loai": "TRU",
+    "Diem": 2,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
+  },
+  {
+    "MaLoi": "DM-133327-RZZ",
+    "TenLoi": "Làm việc riêng",
+    "Loai": "TRU",
+    "Diem": 2,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
+  },
+  {
+    "MaLoi": "DM-497270-9IO",
+    "TenLoi": "Không thuộc bài",
+    "Loai": "TRU",
+    "Diem": 2,
+    "MoTa": "",
+    "TrangThai": "DANG_DUNG"
   }
 ];
 
 export const initialEmulationGroups: EmulationGroup[] = [
-  // Lớp 10A1
-  { MaTo: 'TO-10A1-1', MaLop: 'cls-10a1', TenTo: 'Tổ 1 (Tiên Phong)', ToTruong: 'Nguyễn Văn An', TrangThai: 'DANG_HOAT_DONG' },
-  { MaTo: 'TO-10A1-2', MaLop: 'cls-10a1', TenTo: 'Tổ 2 (Đoàn Kết)', ToTruong: 'Trần Thị Mai', TrangThai: 'DANG_HOAT_DONG' },
-  { MaTo: 'TO-10A1-3', MaLop: 'cls-10a1', TenTo: 'Tổ 3 (Sáng Tạo)', ToTruong: 'Lê Hoàng Long', TrangThai: 'DANG_HOAT_DONG' },
-  { MaTo: 'TO-10A1-4', MaLop: 'cls-10a1', TenTo: 'Tổ 4 (Bứt Phá)', ToTruong: 'Đỗ Minh Quân', TrangThai: 'DANG_HOAT_DONG' },
-
-  // Lớp 10A2
-  { MaTo: 'TO-10A2-1', MaLop: 'cls-10a2', TenTo: 'Tổ 1', ToTruong: 'Vũ Ngọc Ánh', TrangThai: 'DANG_HOAT_DONG' },
-  { MaTo: 'TO-10A2-2', MaLop: 'cls-10a2', TenTo: 'Tổ 2', ToTruong: 'Hoàng Quốc Bảo', TrangThai: 'DANG_HOAT_DONG' },
-
-  // Lớp 11B1
-  { MaTo: 'TO-11B1-1', MaLop: 'cls-11b1', TenTo: 'Tổ 1', ToTruong: 'Đặng Thanh Tâm', TrangThai: 'DANG_HOAT_DONG' },
-
-  // Lớp 12C3
-  { MaTo: 'TO-12C3-1', MaLop: 'cls-12c3', TenTo: 'Tổ 1', ToTruong: 'Lý Diệu Thảo', TrangThai: 'DANG_HOAT_DONG' }
+  {
+    "MaTo": "TO-10C2-1",
+    "MaLop": "10c2",
+    "TenTo": "Tổ 1",
+    "ToTruong": "Nguyễn Hoàng Phúc",
+    "TrangThai": "DANG_HOAT_DONG"
+  },
+  {
+    "MaTo": "TO-10C2-2",
+    "MaLop": "10c2",
+    "TenTo": "Tổ 2",
+    "ToTruong": "Huỳnh Như",
+    "TrangThai": "DANG_HOAT_DONG"
+  },
+  {
+    "MaTo": "TO-10C2-3",
+    "MaLop": "10c2",
+    "TenTo": "Tổ 3",
+    "ToTruong": "Nguyễn Viết Lãm",
+    "TrangThai": "DANG_HOAT_DONG"
+  },
+  {
+    "MaTo": "TO-10C2-4",
+    "MaLop": "10c2",
+    "TenTo": "Tổ 4",
+    "ToTruong": "Nguyễn Tuấn Khang",
+    "TrangThai": "DANG_HOAT_DONG"
+  }
 ];
 
 export const initialGroupMembers: GroupMember[] = [
-  // 10A1 phân tổ
-  { MaPhanTo: 'PT-101', MaHS: 'stu-101', MaTo: 'TO-10A1-1', TuNgay: '2025-09-01' },
-  { MaPhanTo: 'PT-102', MaHS: 'stu-102', MaTo: 'TO-10A1-2', TuNgay: '2025-09-01' },
-  { MaPhanTo: 'PT-103', MaHS: 'stu-103', MaTo: 'TO-10A1-3', TuNgay: '2025-09-01' },
-  { MaPhanTo: 'PT-104', MaHS: 'stu-104', MaTo: 'TO-10A1-1', TuNgay: '2025-09-01' },
-  { MaPhanTo: 'PT-105', MaHS: 'stu-105', MaTo: 'TO-10A1-4', TuNgay: '2025-09-01' },
-
-  // 10A2 phân tổ
-  { MaPhanTo: 'PT-106', MaHS: 'stu-106', MaTo: 'TO-10A2-1', TuNgay: '2025-09-01' },
-  { MaPhanTo: 'PT-107', MaHS: 'stu-107', MaTo: 'TO-10A2-1', TuNgay: '2025-09-01' },
-  { MaPhanTo: 'PT-108', MaHS: 'stu-108', MaTo: 'TO-10A2-2', TuNgay: '2025-09-01' },
-
-  // 11B1 & 12C3
-  { MaPhanTo: 'PT-109', MaHS: 'stu-109', MaTo: 'TO-11B1-1', TuNgay: '2025-09-01' },
-  { MaPhanTo: 'PT-110', MaHS: 'stu-110', MaTo: 'TO-11B1-1', TuNgay: '2025-09-01' },
-  { MaPhanTo: 'PT-111', MaHS: 'stu-111', MaTo: 'TO-12C3-1', TuNgay: '2025-09-01' },
-  { MaPhanTo: 'PT-112', MaHS: 'stu-112', MaTo: 'TO-12C3-1', TuNgay: '2025-09-01' }
+  {
+    "MaPhanTo": "PT-10C2-HS26027",
+    "MaHS": "HS26027",
+    "MaTo": "TO-10C2-1",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26024",
+    "MaHS": "HS26024",
+    "MaTo": "TO-10C2-2",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26018",
+    "MaHS": "HS26018",
+    "MaTo": "TO-10C2-3",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26012",
+    "MaHS": "HS26012",
+    "MaTo": "TO-10C2-4",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26001",
+    "MaHS": "HS26001",
+    "MaTo": "TO-10C2-1",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26002",
+    "MaHS": "HS26002",
+    "MaTo": "TO-10C2-2",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26003",
+    "MaHS": "HS26003",
+    "MaTo": "TO-10C2-3",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26004",
+    "MaHS": "HS26004",
+    "MaTo": "TO-10C2-4",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26005",
+    "MaHS": "HS26005",
+    "MaTo": "TO-10C2-1",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26006",
+    "MaHS": "HS26006",
+    "MaTo": "TO-10C2-2",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26007",
+    "MaHS": "HS26007",
+    "MaTo": "TO-10C2-3",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26008",
+    "MaHS": "HS26008",
+    "MaTo": "TO-10C2-4",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26009",
+    "MaHS": "HS26009",
+    "MaTo": "TO-10C2-1",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26010",
+    "MaHS": "HS26010",
+    "MaTo": "TO-10C2-2",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26011",
+    "MaHS": "HS26011",
+    "MaTo": "TO-10C2-3",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26013",
+    "MaHS": "HS26013",
+    "MaTo": "TO-10C2-4",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26014",
+    "MaHS": "HS26014",
+    "MaTo": "TO-10C2-1",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26015",
+    "MaHS": "HS26015",
+    "MaTo": "TO-10C2-2",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26016",
+    "MaHS": "HS26016",
+    "MaTo": "TO-10C2-3",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26017",
+    "MaHS": "HS26017",
+    "MaTo": "TO-10C2-4",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26019",
+    "MaHS": "HS26019",
+    "MaTo": "TO-10C2-1",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26020",
+    "MaHS": "HS26020",
+    "MaTo": "TO-10C2-2",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26021",
+    "MaHS": "HS26021",
+    "MaTo": "TO-10C2-3",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26022",
+    "MaHS": "HS26022",
+    "MaTo": "TO-10C2-4",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26023",
+    "MaHS": "HS26023",
+    "MaTo": "TO-10C2-1",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26025",
+    "MaHS": "HS26025",
+    "MaTo": "TO-10C2-2",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26026",
+    "MaHS": "HS26026",
+    "MaTo": "TO-10C2-3",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26028",
+    "MaHS": "HS26028",
+    "MaTo": "TO-10C2-4",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26029",
+    "MaHS": "HS26029",
+    "MaTo": "TO-10C2-1",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26030",
+    "MaHS": "HS26030",
+    "MaTo": "TO-10C2-2",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26031",
+    "MaHS": "HS26031",
+    "MaTo": "TO-10C2-3",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26032",
+    "MaHS": "HS26032",
+    "MaTo": "TO-10C2-4",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26033",
+    "MaHS": "HS26033",
+    "MaTo": "TO-10C2-1",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26034",
+    "MaHS": "HS26034",
+    "MaTo": "TO-10C2-2",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26035",
+    "MaHS": "HS26035",
+    "MaTo": "TO-10C2-3",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26036",
+    "MaHS": "HS26036",
+    "MaTo": "TO-10C2-4",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26037",
+    "MaHS": "HS26037",
+    "MaTo": "TO-10C2-1",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26038",
+    "MaHS": "HS26038",
+    "MaTo": "TO-10C2-2",
+    "TuNgay": "2026-09-07"
+  },
+  {
+    "MaPhanTo": "PT-10C2-HS26039",
+    "MaHS": "HS26039",
+    "MaTo": "TO-10C2-3",
+    "TuNgay": "2026-09-07"
+  }
 ];
 
 export const initialEmulationPeriods: EmulationPeriod[] = [
   {
-    MaKy: '2026-W40',
-    NamHoc: '2025 - 2026',
-    TuanSo: 40,
-    TuNgay: '2026-09-28',
-    DenNgay: '2026-10-04',
-    DiemDauTuan: 0,
-    TrangThai: 'DA_KHOA',
-    ThoiGianKhoa: '2026-10-04T18:00:00Z',
-    NguoiKhoa: 'Thầy Nguyễn Văn Nam (GVCN)',
-    GhiChu: 'Tuần phát động phong trào thi đua tháng 10'
+    "MaKy": "2026-W01",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 1,
+    "TuNgay": "2026-09-07",
+    "DenNgay": "2026-09-13",
+    "DiemDauTuan": 0,
+    "TrangThai": "DA_KHOA",
+    "ThoiGianKhoa": "2026-09-13T18:00:00Z",
+    "NguoiKhoa": "Ban Thi Đua",
+    "GhiChu": "Tuần 1: Khai giảng & phát động thi đua năm học mới"
   },
   {
-    MaKy: '2026-W41',
-    NamHoc: '2025 - 2026',
-    TuanSo: 41,
-    TuNgay: '2026-10-05',
-    DenNgay: '2026-10-11',
-    DiemDauTuan: 0,
-    TrangThai: 'DANG_DIEN_RA',
-    GhiChu: 'Tuần học trọng tâm ôn giữa kỳ 1'
+    "MaKy": "2026-W02",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 2,
+    "TuNgay": "2026-09-14",
+    "DenNgay": "2026-09-20",
+    "DiemDauTuan": 0,
+    "TrangThai": "DA_KHOA",
+    "ThoiGianKhoa": "2026-09-20T18:00:00Z",
+    "NguoiKhoa": "Ban Thi Đua",
+    "GhiChu": "Tuần 2: Ổn định nề nếp học tập và kỷ cương trường lớp"
   },
   {
-    MaKy: '2026-W42',
-    NamHoc: '2025 - 2026',
-    TuanSo: 42,
-    TuNgay: '2026-10-12',
-    DenNgay: '2026-10-18',
-    DiemDauTuan: 0,
-    TrangThai: 'DANG_DIEN_RA',
-    GhiChu: 'Tuần thi đua chào mừng 20/10'
+    "MaKy": "2026-W03",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 3,
+    "TuNgay": "2026-09-21",
+    "DenNgay": "2026-09-27",
+    "DiemDauTuan": 0,
+    "TrangThai": "DA_KHOA",
+    "ThoiGianKhoa": "2026-09-27T18:00:00Z",
+    "NguoiKhoa": "Ban Thi Đua",
+    "GhiChu": "Tuần 3: Phát huy tinh thần tự quản và tinh thần đoàn kết"
+  },
+  {
+    "MaKy": "2026-W04",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 4,
+    "TuNgay": "2026-09-28",
+    "DenNgay": "2026-10-04",
+    "DiemDauTuan": 0,
+    "TrangThai": "DA_KHOA",
+    "ThoiGianKhoa": "2026-10-04T18:00:00Z",
+    "NguoiKhoa": "Ban Thi Đua",
+    "GhiChu": "Tuần 4: Phát động thi đua cao điểm chào mừng tháng 10"
+  },
+  {
+    "MaKy": "2026-W05",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 5,
+    "TuNgay": "2026-10-05",
+    "DenNgay": "2026-10-11",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 5: Trọng tâm học tốt, ôn tập giữa học kỳ 1 (Tuần hiện tại)"
+  },
+  {
+    "MaKy": "2026-W06",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 6,
+    "TuNgay": "2026-10-12",
+    "DenNgay": "2026-10-18",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 6: Phong trào thi đua chào mừng Ngày Phụ nữ Việt Nam 20/10"
+  },
+  {
+    "MaKy": "2026-W07",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 7,
+    "TuNgay": "2026-10-19",
+    "DenNgay": "2026-10-25",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 7: Nỗ lực đạt nhiều bông hoa điểm 10"
+  },
+  {
+    "MaKy": "2026-W08",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 8,
+    "TuNgay": "2026-10-26",
+    "DenNgay": "2026-11-01",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 8: Phát động đợt thi đua chào mừng Ngày Nhà giáo Việt Nam 20/11"
+  },
+  {
+    "MaKy": "2026-W09",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 9,
+    "TuNgay": "2026-11-02",
+    "DenNgay": "2026-11-08",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 9: Tiết học tốt, giờ học hay dâng tặng thầy cô"
+  },
+  {
+    "MaKy": "2026-W10",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 10,
+    "TuNgay": "2026-11-09",
+    "DenNgay": "2026-11-15",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 10: Giữ vững nề nếp kỷ cương trường lớp"
+  },
+  {
+    "MaKy": "2026-W11",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 11,
+    "TuNgay": "2026-11-16",
+    "DenNgay": "2026-11-22",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 11: Tuần lễ tri ân thầy cô giáo 20/11"
+  },
+  {
+    "MaKy": "2026-W12",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 12,
+    "TuNgay": "2026-11-23",
+    "DenNgay": "2026-11-29",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 12: Đẩy mạnh phong trào tự học và đôi bạn cùng tiến"
+  },
+  {
+    "MaKy": "2026-W13",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 13,
+    "TuNgay": "2026-11-30",
+    "DenNgay": "2026-12-06",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 13: Chuẩn bị kế hoạch ôn thi cuối học kỳ 1"
+  },
+  {
+    "MaKy": "2026-W14",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 14,
+    "TuNgay": "2026-12-07",
+    "DenNgay": "2026-12-13",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 14: Ôn tập cao điểm học kỳ 1"
+  },
+  {
+    "MaKy": "2026-W15",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 15,
+    "TuNgay": "2026-12-14",
+    "DenNgay": "2026-12-20",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 15: Thi học kỳ 1 nghiêm túc, đúng quy chế"
+  },
+  {
+    "MaKy": "2026-W16",
+    "NamHoc": "2026 - 2027",
+    "TuanSo": 16,
+    "TuNgay": "2026-12-21",
+    "DenNgay": "2026-12-27",
+    "DiemDauTuan": 0,
+    "TrangThai": "DANG_DIEN_RA",
+    "GhiChu": "Tuần 16: Tổng kết thi đua học kỳ 1"
   }
 ];
 
-export const initialEmulationRecords: EmulationRecord[] = [
-  // Tuần 40 (Đã khóa)
-  {
-    MaGhiNhan: 'REC-W40-001',
-    Ngay: '2026-09-29',
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-101',
-    TenHS: 'Nguyễn Văn An',
-    TenTo: 'Tổ 1 (Tiên Phong)',
-    MaLoi: 'DM-HOCTOT',
-    TenLoi: 'Thành tích học tập tốt',
-    Loai: 'CONG',
-    Diem: 3,
-    GhiChu: 'Đạt điểm 10 kiểm tra miệng môn Toán',
-    NguoiGhiNhan: 'Thầy Nguyễn Văn Nam',
-    TrangThai: 'HIEU_LUC',
-    ThoiGianTao: '2026-09-29T08:30:00Z'
-  },
-  {
-    MaGhiNhan: 'REC-W40-002',
-    Ngay: '2026-09-30',
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-102',
-    TenHS: 'Trần Thị Mai',
-    TenTo: 'Tổ 2 (Đoàn Kết)',
-    MaLoi: 'DM-VIECTOT',
-    TenLoi: 'Việc tốt nổi bật',
-    Loai: 'CONG',
-    Diem: 3,
-    GhiChu: 'Nhặt được ví tiền và nộp lại cho ban giám hiệu',
-    NguoiGhiNhan: 'Cô Trần Thị Hương',
-    TrangThai: 'HIEU_LUC',
-    ThoiGianTao: '2026-09-30T10:15:00Z'
-  },
-  {
-    MaGhiNhan: 'REC-W40-003',
-    Ngay: '2026-10-01',
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-105',
-    TenHS: 'Đỗ Minh Quân',
-    TenTo: 'Tổ 4 (Bứt Phá)',
-    MaLoi: 'DM-MUON',
-    TenLoi: 'Đi học muộn',
-    Loai: 'TRU',
-    Diem: -2,
-    GhiChu: 'Muộn 15 phút tiết 1',
-    NguoiGhiNhan: 'Sao đỏ khối 10',
-    TrangThai: 'HIEU_LUC',
-    ThoiGianTao: '2026-10-01T07:15:00Z'
-  },
+export const initialEmulationRecords: EmulationRecord[] = [];
 
-  // Tuần 41 (Đang diễn ra)
+export const initialWeeklyStudentSummaries: WeeklyStudentSummary[] = [];
+
+export const initialWeeklyGroupSummaries: WeeklyGroupSummary[] = [];
+
+export const initialClassOfficers: ClassOfficer[] = [
   {
-    MaGhiNhan: 'REC-W41-001',
-    Ngay: '2026-10-06',
-    MaKy: '2026-W41',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-101',
-    TenHS: 'Nguyễn Văn An',
-    TenTo: 'Tổ 1 (Tiên Phong)',
-    MaLoi: 'DM-GIUPBAN',
-    TenLoi: 'Giúp đỡ bạn',
-    Loai: 'CONG',
-    Diem: 3,
-    GhiChu: 'Kèm bạn Quân ôn bài tập Toán hình',
-    NguoiGhiNhan: 'Thầy Nguyễn Văn Nam',
-    TrangThai: 'HIEU_LUC',
-    ThoiGianTao: '2026-10-06T15:00:00Z'
+    "id": "OFF-348716-KB4",
+    "classId": "10c2",
+    "studentId": "HS26016",
+    "studentName": "Ngô Thị Cẩm Ly",
+    "studentCode": "HS26016",
+    "role": "LOP_TRUONG",
+    "duty": "Phụ trách chung công tác tự quản của lớp, đôn đốc các hoạt động và đại diện tập thể làm việc với GVCN",
+    "contactPhone": "",
+    "appointedDate": "2026-10-10"
   },
   {
-    MaGhiNhan: 'REC-W41-002',
-    Ngay: '2026-10-07',
-    MaKy: '2026-W41',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-103',
-    TenHS: 'Lê Hoàng Long',
-    TenTo: 'Tổ 3 (Sáng Tạo)',
-    MaLoi: 'DM-NOICHUYEN',
-    TenLoi: 'Nói chuyện riêng',
-    Loai: 'TRU',
-    Diem: -1,
-    GhiChu: 'Nhắc nhở 2 lần trong giờ Sinh',
-    NguoiGhiNhan: 'Cô Nguyễn Lan',
-    TrangThai: 'HIEU_LUC',
-    ThoiGianTao: '2026-10-07T09:45:00Z'
+    "id": "OFF-367633-GE4",
+    "classId": "10c2",
+    "studentId": "HS26018",
+    "studentName": "Nguyễn Thị Bé My",
+    "studentCode": "HS26018",
+    "role": "LOP_PHO_HOC_TAP",
+    "duty": "Theo dõi bài vở, tổ chức 15 phút truy bài đầu giờ, giúp đỡ các bạn học yếu và báo cáo tình hình học tập",
+    "contactPhone": "",
+    "appointedDate": "2026-10-10"
   },
   {
-    MaGhiNhan: 'REC-W41-003',
-    Ngay: '2026-10-08',
-    MaKy: '2026-W41',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-104',
-    TenHS: 'Phạm Thu Hương',
-    TenTo: 'Tổ 1 (Tiên Phong)',
-    MaLoi: 'DM-HOCTOT',
-    TenLoi: 'Thành tích học tập tốt',
-    Loai: 'CONG',
-    Diem: 3,
-    GhiChu: 'Thuyết trình bài tiếng Anh xuất sắc',
-    NguoiGhiNhan: 'Thầy John Smith',
-    TrangThai: 'HIEU_LUC',
-    ThoiGianTao: '2026-10-08T10:30:00Z'
+    "id": "OFF-400679-BRS",
+    "classId": "10c2",
+    "studentId": "HS26005",
+    "studentName": "Dương Minh Châu",
+    "studentCode": "HS26005",
+    "role": "LOP_PHO_PHONG_TRAO",
+    "duty": "Tổ chức các hoạt động văn nghệ, thể dục thể thao, báo tường và phong trào đoàn đội của trường",
+    "contactPhone": "",
+    "appointedDate": "2026-10-10"
   },
   {
-    MaGhiNhan: 'REC-W41-004',
-    Ngay: '2026-10-08',
-    MaKy: '2026-W41',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-105',
-    TenHS: 'Đỗ Minh Quân',
-    TenTo: 'Tổ 4 (Bứt Phá)',
-    MaLoi: 'DM-DONGPHUC',
-    TenLoi: 'Không đồng phục đúng quy định',
-    Loai: 'TRU',
-    Diem: -1,
-    GhiChu: 'Quên mang thẻ học sinh',
-    NguoiGhiNhan: 'Sao đỏ',
-    TrangThai: 'DA_HUY', // Ví dụ bản ghi bị hủy có lưu vết
-    ThoiGianTao: '2026-10-08T07:10:00Z',
-    NguoiSua: 'Thầy Nguyễn Văn Nam (GVCN)',
-    LyDoSuaHuy: 'Học sinh có mang thẻ nhưng để trong cặp, đã xuất trình lại'
+    "id": "OFF-420919-PX5",
+    "classId": "10c2",
+    "studentId": "HS26020",
+    "studentName": "Nguyễn Hương Nguyên",
+    "studentCode": "HS26020",
+    "role": "THU_QUY",
+    "duty": "Quản lý thu chi quỹ lớp công khai minh bạch, mua sắm văn phòng phẩm và chuẩn bị hoạt động tập thể",
+    "contactPhone": "",
+    "appointedDate": "2026-10-10"
   },
   {
-    MaGhiNhan: 'REC-W41-005',
-    Ngay: '2026-10-09',
-    MaKy: '2026-W41',
-    MaLop: 'cls-10a2',
-    MaHS: 'stu-106',
-    TenHS: 'Vũ Ngọc Ánh',
-    TenTo: 'Tổ 1',
-    MaLoi: 'DM-HOCTOT',
-    TenLoi: 'Thành tích học tập tốt',
-    Loai: 'CONG',
-    Diem: 3,
-    GhiChu: 'Điểm 10 thực hành Hóa',
-    NguoiGhiNhan: 'Cô Trần Thị Hương',
-    TrangThai: 'HIEU_LUC',
-    ThoiGianTao: '2026-10-09T08:00:00Z'
+    "id": "OFF-465124-22D",
+    "classId": "10c2",
+    "studentId": "HS26027",
+    "studentName": "Nguyễn Hoàng Phúc",
+    "studentCode": "HS26027",
+    "role": "TO_TRUONG",
+    "duty": "Điều hành các hoạt động thi đua và tự quản của tổ",
+    "contactPhone": "",
+    "appointedDate": "2026-10-10"
+  },
+  {
+    "id": "OFF-482566-9UH",
+    "classId": "10c2",
+    "studentId": "HS26024",
+    "studentName": "Huỳnh Như",
+    "studentCode": "HS26024",
+    "role": "TO_TRUONG",
+    "duty": "Điều hành các hoạt động thi đua và tự quản của tổ",
+    "contactPhone": "",
+    "appointedDate": "2026-10-10"
+  },
+  {
+    "id": "OFF-494455-0P2",
+    "classId": "10c2",
+    "studentId": "HS26015",
+    "studentName": "Nguyễn Viết Lãm",
+    "studentCode": "HS26015",
+    "role": "TO_TRUONG",
+    "duty": "Điều hành các hoạt động thi đua và tự quản của tổ",
+    "contactPhone": "",
+    "appointedDate": "2026-10-10"
+  },
+  {
+    "id": "OFF-512307-P7U",
+    "classId": "10c2",
+    "studentId": "HS26014",
+    "studentName": "Nguyễn Tuấn Khang",
+    "studentCode": "HS26014",
+    "role": "TO_TRUONG",
+    "duty": "Điều hành các hoạt động thi đua và tự quản của tổ",
+    "contactPhone": "",
+    "appointedDate": "2026-10-10"
   }
 ];
 
-export const initialWeeklyStudentSummaries: WeeklyStudentSummary[] = [
-  // Snapshot tuần 40 cho 10A1
+export const initialSeatingCharts: SeatingChart[] = [
   {
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-101',
-    TenHS: 'Nguyễn Văn An',
-    MaTo: 'TO-10A1-1',
-    TenTo: 'Tổ 1 (Tiên Phong)',
-    DiemDauTuan: 0,
-    TongDiemCong: 3,
-    TongDiemTru: 0,
-    DiemCuoiTuan: 3,
-    SoThanhTich: 1,
-    SoViPham: 0,
-    XepHang: 1,
-    TrangThai: 'DA_KHOA'
-  },
-  {
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-102',
-    TenHS: 'Trần Thị Mai',
-    MaTo: 'TO-10A1-2',
-    TenTo: 'Tổ 2 (Đoàn Kết)',
-    DiemDauTuan: 0,
-    TongDiemCong: 3,
-    TongDiemTru: 0,
-    DiemCuoiTuan: 3,
-    SoThanhTich: 1,
-    SoViPham: 0,
-    XepHang: 1,
-    TrangThai: 'DA_KHOA'
-  },
-  {
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-103',
-    TenHS: 'Lê Hoàng Long',
-    MaTo: 'TO-10A1-3',
-    TenTo: 'Tổ 3 (Sáng Tạo)',
-    DiemDauTuan: 0,
-    TongDiemCong: 0,
-    TongDiemTru: 0,
-    DiemCuoiTuan: 0,
-    SoThanhTich: 0,
-    SoViPham: 0,
-    XepHang: 3,
-    TrangThai: 'DA_KHOA'
-  },
-  {
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-104',
-    TenHS: 'Phạm Thu Hương',
-    MaTo: 'TO-10A1-1',
-    TenTo: 'Tổ 1 (Tiên Phong)',
-    DiemDauTuan: 0,
-    TongDiemCong: 0,
-    TongDiemTru: 0,
-    DiemCuoiTuan: 0,
-    SoThanhTich: 0,
-    SoViPham: 0,
-    XepHang: 3,
-    TrangThai: 'DA_KHOA'
-  },
-  {
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaHS: 'stu-105',
-    TenHS: 'Đỗ Minh Quân',
-    MaTo: 'TO-10A1-4',
-    TenTo: 'Tổ 4 (Bứt Phá)',
-    DiemDauTuan: 0,
-    TongDiemCong: 0,
-    TongDiemTru: -2,
-    DiemCuoiTuan: -2,
-    SoThanhTich: 0,
-    SoViPham: 1,
-    XepHang: 5,
-    TrangThai: 'DA_KHOA'
+    "id": "SEAT-10C2-HK1",
+    "classId": "10c2",
+    "title": "Sơ đồ chỗ ngồi Lớp 10C2 - Học kỳ 1",
+    "academicYear": "2026 - 2027",
+    "term": "HK1",
+    "rows": 5,
+    "columns": 4,
+    "seatsPerDesk": 2,
+    "teacherNote": "Học sinh chú ý ngồi đúng vị trí phân công, không tự ý đổi chỗ khi chưa có sự đồng ý của GVCN.",
+    "updatedAt": "2026-10-10T11:23:22.656Z",
+    "seats": [
+      {
+        "seatId": "R1-C1-S1",
+        "row": 1,
+        "column": 1,
+        "seatIndex": 1,
+        "studentId": "HS26025",
+        "studentName": "Trần Thành Phát",
+        "studentCode": "HS26025",
+        "note": ""
+      },
+      {
+        "seatId": "R1-C1-S2",
+        "row": 1,
+        "column": 1,
+        "seatIndex": 2,
+        "studentId": "HS26027",
+        "studentName": "Nguyễn Hoàng Phúc",
+        "studentCode": "HS26027",
+        "note": ""
+      },
+      {
+        "seatId": "R1-C2-S1",
+        "row": 1,
+        "column": 2,
+        "seatIndex": 1,
+        "studentId": "HS26036",
+        "studentName": "Lê Bích Trâm",
+        "studentCode": "HS26036"
+      },
+      {
+        "seatId": "R1-C2-S2",
+        "row": 1,
+        "column": 2,
+        "seatIndex": 2,
+        "studentId": "HS26016",
+        "studentName": "Ngô Thị Cẩm Ly",
+        "studentCode": "HS26016"
+      },
+      {
+        "seatId": "R1-C3-S1",
+        "row": 1,
+        "column": 3,
+        "seatIndex": 1,
+        "studentId": "HS26032",
+        "studentName": "Trần Gia Thiện",
+        "studentCode": "HS26032",
+        "note": ""
+      },
+      {
+        "seatId": "R1-C3-S2",
+        "row": 1,
+        "column": 3,
+        "seatIndex": 2,
+        "studentId": "HS26015",
+        "studentName": "Nguyễn Viết Lãm",
+        "studentCode": "HS26015",
+        "note": ""
+      },
+      {
+        "seatId": "R1-C4-S1",
+        "row": 1,
+        "column": 4,
+        "seatIndex": 1,
+        "studentId": "HS26013",
+        "studentName": "Nguyễn Văn Kiệt",
+        "studentCode": "HS26013",
+        "note": ""
+      },
+      {
+        "seatId": "R1-C4-S2",
+        "row": 1,
+        "column": 4,
+        "seatIndex": 2,
+        "studentId": "HS26002",
+        "studentName": "Nguyễn Phạm Gia An",
+        "studentCode": "HS26002"
+      },
+      {
+        "seatId": "R2-C1-S1",
+        "row": 2,
+        "column": 1,
+        "seatIndex": 1
+      },
+      {
+        "seatId": "R2-C1-S2",
+        "row": 2,
+        "column": 1,
+        "seatIndex": 2,
+        "studentId": "HS26011",
+        "studentName": "Hồ Gia Huy",
+        "studentCode": "HS26011",
+        "note": ""
+      },
+      {
+        "seatId": "R2-C2-S1",
+        "row": 2,
+        "column": 2,
+        "seatIndex": 1,
+        "studentId": "HS26039",
+        "studentName": "Ngô Thị Kim Yến",
+        "studentCode": "HS26039"
+      },
+      {
+        "seatId": "R2-C2-S2",
+        "row": 2,
+        "column": 2,
+        "seatIndex": 2,
+        "studentId": "HS26037",
+        "studentName": "Phạm Thị Yến Vi",
+        "studentCode": "HS26037",
+        "note": ""
+      },
+      {
+        "seatId": "R2-C3-S1",
+        "row": 2,
+        "column": 3,
+        "seatIndex": 1,
+        "studentId": "HS26019",
+        "studentName": "Nguyễn Thị Hà My",
+        "studentCode": "HS26019",
+        "note": ""
+      },
+      {
+        "seatId": "R2-C3-S2",
+        "row": 2,
+        "column": 3,
+        "seatIndex": 2,
+        "studentId": "HS26020",
+        "studentName": "Nguyễn Hương Nguyên",
+        "studentCode": "HS26020",
+        "note": ""
+      },
+      {
+        "seatId": "R2-C4-S1",
+        "row": 2,
+        "column": 4,
+        "seatIndex": 1,
+        "studentId": "HS26001",
+        "studentName": "Lê Bảo An",
+        "studentCode": "HS26001"
+      },
+      {
+        "seatId": "R2-C4-S2",
+        "row": 2,
+        "column": 4,
+        "seatIndex": 2,
+        "studentId": "HS26014",
+        "studentName": "Nguyễn Tuấn Khang",
+        "studentCode": "HS26014",
+        "note": ""
+      },
+      {
+        "seatId": "R3-C1-S1",
+        "row": 3,
+        "column": 1,
+        "seatIndex": 1,
+        "studentId": "HS26030",
+        "studentName": "Trần Gia Tường",
+        "studentCode": "HS26030"
+      },
+      {
+        "seatId": "R3-C1-S2",
+        "row": 3,
+        "column": 1,
+        "seatIndex": 2,
+        "studentId": "HS26004",
+        "studentName": "Lê Vũ Bằng",
+        "studentCode": "HS26004",
+        "note": ""
+      },
+      {
+        "seatId": "R3-C2-S1",
+        "row": 3,
+        "column": 2,
+        "seatIndex": 1,
+        "studentId": "HS26018",
+        "studentName": "Nguyễn Thị Bé My",
+        "studentCode": "HS26018"
+      },
+      {
+        "seatId": "R3-C2-S2",
+        "row": 3,
+        "column": 2,
+        "seatIndex": 2,
+        "studentId": "HS26031",
+        "studentName": "Hồ Thị Ngọc Thảo",
+        "studentCode": "HS26031",
+        "note": ""
+      },
+      {
+        "seatId": "R3-C3-S1",
+        "row": 3,
+        "column": 3,
+        "seatIndex": 1,
+        "studentId": "HS26010",
+        "studentName": "Lý Gia Đức",
+        "studentCode": "HS26010"
+      },
+      {
+        "seatId": "R3-C3-S2",
+        "row": 3,
+        "column": 3,
+        "seatIndex": 2,
+        "studentId": "HS26009",
+        "studentName": "Phan Quốc Đoàn",
+        "studentCode": "HS26009",
+        "note": ""
+      },
+      {
+        "seatId": "R3-C4-S1",
+        "row": 3,
+        "column": 4,
+        "seatIndex": 1,
+        "studentId": "HS26026",
+        "studentName": "Trần Phong Phú",
+        "studentCode": "HS26026",
+        "note": ""
+      },
+      {
+        "seatId": "R3-C4-S2",
+        "row": 3,
+        "column": 4,
+        "seatIndex": 2,
+        "studentId": "HS26028",
+        "studentName": "Trương Nhật Quang",
+        "studentCode": "HS26028",
+        "note": ""
+      },
+      {
+        "seatId": "R4-C1-S1",
+        "row": 4,
+        "column": 1,
+        "seatIndex": 1,
+        "studentId": "HS26034",
+        "studentName": "Trần Bá Thời",
+        "studentCode": "HS26034"
+      },
+      {
+        "seatId": "R4-C1-S2",
+        "row": 4,
+        "column": 1,
+        "seatIndex": 2,
+        "studentId": "HS26007",
+        "studentName": "Võ Thành Đạt",
+        "studentCode": "HS26007"
+      },
+      {
+        "seatId": "R4-C2-S1",
+        "row": 4,
+        "column": 2,
+        "seatIndex": 1,
+        "studentId": "HS26005",
+        "studentName": "Dương Minh Châu",
+        "studentCode": "HS26005",
+        "note": ""
+      },
+      {
+        "seatId": "R4-C2-S2",
+        "row": 4,
+        "column": 2,
+        "seatIndex": 2,
+        "studentId": "HS26035",
+        "studentName": "Phạm Anh Thư",
+        "studentCode": "HS26035",
+        "note": ""
+      },
+      {
+        "seatId": "R4-C3-S1",
+        "row": 4,
+        "column": 3,
+        "seatIndex": 1,
+        "studentId": "HS26003",
+        "studentName": "Lê Duyên Anh",
+        "studentCode": "HS26003",
+        "note": ""
+      },
+      {
+        "seatId": "R4-C3-S2",
+        "row": 4,
+        "column": 3,
+        "seatIndex": 2,
+        "studentId": "HS26023",
+        "studentName": "Phan Tiến Nhật",
+        "studentCode": "HS26023",
+        "note": ""
+      },
+      {
+        "seatId": "R4-C4-S1",
+        "row": 4,
+        "column": 4,
+        "seatIndex": 1,
+        "studentId": "HS26038",
+        "studentName": "Phan Trường Vũ",
+        "studentCode": "HS26038",
+        "note": ""
+      },
+      {
+        "seatId": "R4-C4-S2",
+        "row": 4,
+        "column": 4,
+        "seatIndex": 2,
+        "studentId": "HS26029",
+        "studentName": "Nguyễn Văn Tình",
+        "studentCode": "HS26029",
+        "note": ""
+      },
+      {
+        "seatId": "R5-C1-S1",
+        "row": 5,
+        "column": 1,
+        "seatIndex": 1,
+        "studentId": "HS26022",
+        "studentName": "Phan Thành Nhân",
+        "studentCode": "HS26022",
+        "note": ""
+      },
+      {
+        "seatId": "R5-C1-S2",
+        "row": 5,
+        "column": 1,
+        "seatIndex": 2,
+        "studentId": "HS26021",
+        "studentName": "Lý Hữu Nhân",
+        "studentCode": "HS26021"
+      },
+      {
+        "seatId": "R5-C2-S1",
+        "row": 5,
+        "column": 2,
+        "seatIndex": 1,
+        "studentId": "HS26006",
+        "studentName": "Nguyễn Thị Chành Đa",
+        "studentCode": "HS26006",
+        "note": ""
+      },
+      {
+        "seatId": "R5-C2-S2",
+        "row": 5,
+        "column": 2,
+        "seatIndex": 2,
+        "studentId": "HS26024",
+        "studentName": "Huỳnh Như",
+        "studentCode": "HS26024"
+      },
+      {
+        "seatId": "R5-C3-S1",
+        "row": 5,
+        "column": 3,
+        "seatIndex": 1,
+        "studentId": "HS26033",
+        "studentName": "Nguyễn Đức Thọ",
+        "studentCode": "HS26033",
+        "note": ""
+      },
+      {
+        "seatId": "R5-C3-S2",
+        "row": 5,
+        "column": 3,
+        "seatIndex": 2,
+        "studentId": "HS26012",
+        "studentName": "Phạm Quốc Hưng",
+        "studentCode": "HS26012",
+        "note": ""
+      },
+      {
+        "seatId": "R5-C4-S1",
+        "row": 5,
+        "column": 4,
+        "seatIndex": 1,
+        "studentId": "HS26008",
+        "studentName": "Nguyễn Huỳnh Hải Đăng",
+        "studentCode": "HS26008",
+        "note": ""
+      },
+      {
+        "seatId": "R5-C4-S2",
+        "row": 5,
+        "column": 4,
+        "seatIndex": 2,
+        "studentId": "HS26017",
+        "studentName": "Lê Quốc Minh",
+        "studentCode": "HS26017",
+        "note": ""
+      }
+    ]
   }
 ];
-
-export const initialWeeklyGroupSummaries: WeeklyGroupSummary[] = [
-  // Snapshot tuần 40 cho 10A1
-  {
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaTo: 'TO-10A1-2',
-    TenTo: 'Tổ 2 (Đoàn Kết)',
-    SoThanhVien: 1,
-    TongDiemCong: 3,
-    TongDiemTru: 0,
-    TongDiem: 3,
-    DiemBinhQuan: 3.0,
-    XepHang: 1,
-    TrangThai: 'DA_KHOA'
-  },
-  {
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaTo: 'TO-10A1-1',
-    TenTo: 'Tổ 1 (Tiên Phong)',
-    SoThanhVien: 2,
-    TongDiemCong: 3,
-    TongDiemTru: 0,
-    TongDiem: 3,
-    DiemBinhQuan: 1.5,
-    XepHang: 2,
-    TrangThai: 'DA_KHOA'
-  },
-  {
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaTo: 'TO-10A1-3',
-    TenTo: 'Tổ 3 (Sáng Tạo)',
-    SoThanhVien: 1,
-    TongDiemCong: 0,
-    TongDiemTru: 0,
-    TongDiem: 0,
-    DiemBinhQuan: 0.0,
-    XepHang: 3,
-    TrangThai: 'DA_KHOA'
-  },
-  {
-    MaKy: '2026-W40',
-    MaLop: 'cls-10a1',
-    MaTo: 'TO-10A1-4',
-    TenTo: 'Tổ 4 (Bứt Phá)',
-    SoThanhVien: 1,
-    TongDiemCong: 0,
-    TongDiemTru: -2,
-    TongDiem: -2,
-    DiemBinhQuan: -2.0,
-    XepHang: 4,
-    TrangThai: 'DA_KHOA'
-  }
-];
-

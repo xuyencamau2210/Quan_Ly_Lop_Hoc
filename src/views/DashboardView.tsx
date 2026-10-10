@@ -13,7 +13,8 @@ import {
   Server, 
   Database,
   Clock,
-  Sparkles
+  Sparkles,
+  LayoutGrid
 } from 'lucide-react';
 import { DashboardStats, Classroom } from '../types/index.ts';
 import { NavTab } from '../components/Sidebar.tsx';
@@ -73,6 +74,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             >
               <Trophy className="w-4 h-4 text-slate-900" />
               Thi đua tuần
+            </button>
+            <button
+              onClick={() => onNavigate('organization')}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-900 font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
+            >
+              <LayoutGrid className="w-4 h-4 text-slate-900" />
+              Tổ chức & Sơ đồ
             </button>
             <button
               onClick={() => onNavigate('attendance')}

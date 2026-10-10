@@ -6,6 +6,7 @@ import { classroomStore } from './server/data/store.ts';
 import { GoogleSheetsService } from './server/services/googleSheetsService.ts';
 import { GoogleDriveService } from './server/services/googleDriveService.ts';
 import { GoogleWorkspaceService } from './server/services/workspaceService.ts';
+import { ExcelExportService } from './server/services/excelExportService.ts';
 import { runEmulationTestSuite } from './server/test_emulation_suite.ts';
 
 dotenv.config();
@@ -17,6 +18,47 @@ const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 app.use(express.json());
+
+// Phục vụ tải tệp Excel tĩnh
+app.use('/downloads', express.static(path.resolve(__dirname, 'public', 'downloads')));
+
+// --- XUẤT TỆP EXCEL (.xlsx) LƯU TRỮ DỮ LIỆU ---
+app.get('/api/export/excel', (req: Request, res: Response) => {
+  try {
+    const classId = req.query.classId as string | undefined;
+    const buffer = ExcelExportService.generateExcelBuffer(classId);
+    const fileName = classId 
+      ? `Du_Lieu_Lop_${classId}_2026_2027.xlsx`
+      : 'Du_Lieu_Quan_Ly_Lop_Hoc_2026_2027.xlsx';
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(fileName)}"`);
+    res.setHeader('Cache-Control', 'no-cache');
+    res.send(buffer);
+  } catch (error: any) {
+    console.error('Lỗi khi xuất file Excel:', error);
+    res.status(500).json({ error: error.message || 'Lỗi khi tạo và xuất file Excel' });
+  }
+});
+
+app.get('/api/export/excel/summary', (req: Request, res: Response) => {
+  try {
+    const classId = req.query.classId as string | undefined;
+    const summary = ExcelExportService.getExportSummary(classId);
+    res.json(summary);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi lấy thông tin tệp Excel' });
+  }
+});
+
+app.post('/api/export/excel/generate', (_req: Request, res: Response) => {
+  try {
+    const result = ExcelExportService.saveExcelFilesToDisk();
+    res.json({ success: true, ...result });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi ghi tệp Excel lên ổ đĩa' });
+  }
+});
 
 // API Routes
 
@@ -89,6 +131,108 @@ app.delete('/api/classes/:id', (req: Request, res: Response) => {
     res.json({ message: 'Xóa lớp học thành công' });
   } catch (error) {
     res.status(500).json({ error: 'Lỗi khi xóa lớp học' });
+  }
+});
+
+// Class Officers (Ban cán sự lớp)
+app.get('/api/classes/:id/officers', (req: Request, res: Response) => {
+  try {
+    const officers = classroomStore.getClassOfficers(req.params.id);
+    res.json(officers);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi tải danh sách ban cán sự' });
+  }
+});
+
+app.post('/api/classes/:id/officers', (req: Request, res: Response) => {
+  try {
+    const { studentId, role, customRoleTitle, duty, contactPhone } = req.body;
+    if (!studentId || !role) {
+      return res.status(400).json({ error: 'Cần chọn học sinh và chức vụ ban cán sự' });
+    }
+    const officer = classroomStore.assignClassOfficer({
+      classId: req.params.id,
+      studentId,
+      role,
+      customRoleTitle,
+      duty,
+      contactPhone
+    });
+    res.status(201).json(officer);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi phân công ban cán sự' });
+  }
+});
+
+app.put('/api/classes/:id/officers/:officerId', (req: Request, res: Response) => {
+  try {
+    const updated = classroomStore.updateClassOfficer(req.params.officerId, req.body);
+    if (!updated) return res.status(404).json({ error: 'Không tìm thấy chức vụ ban cán sự' });
+    res.json(updated);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi cập nhật ban cán sự' });
+  }
+});
+
+app.delete('/api/classes/:id/officers/:officerId', (req: Request, res: Response) => {
+  try {
+    const success = classroomStore.removeClassOfficer(req.params.officerId);
+    if (!success) return res.status(404).json({ error: 'Không tìm thấy chức vụ để xóa' });
+    res.json({ success: true, message: 'Đã hủy phân công ban cán sự' });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi xóa phân công ban cán sự' });
+  }
+});
+
+// Seating Chart (Sơ đồ chỗ ngồi)
+app.get('/api/classes/:id/seating-chart', (req: Request, res: Response) => {
+  try {
+    const chart = classroomStore.getSeatingChart(req.params.id);
+    res.json(chart);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi tải sơ đồ chỗ ngồi' });
+  }
+});
+
+app.put('/api/classes/:id/seating-chart', (req: Request, res: Response) => {
+  try {
+    const chart = classroomStore.saveSeatingChart(req.body);
+    res.json(chart);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi lưu sơ đồ chỗ ngồi' });
+  }
+});
+
+app.post('/api/classes/:id/seating-chart/assign', (req: Request, res: Response) => {
+  try {
+    const { seatId, studentId, note } = req.body;
+    if (!seatId) return res.status(400).json({ error: 'Cần cung cấp mã vị trí ghế' });
+    const chart = classroomStore.updateSeatAssignment(req.params.id, seatId, studentId, note);
+    res.json(chart);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi xếp chỗ ngồi học sinh' });
+  }
+});
+
+app.post('/api/classes/:id/seating-chart/swap', (req: Request, res: Response) => {
+  try {
+    const { seatIdA, seatIdB } = req.body;
+    if (!seatIdA || !seatIdB) return res.status(400).json({ error: 'Cần cung cấp 2 vị trí ghế để đổi chỗ' });
+    const chart = classroomStore.swapSeats(req.params.id, seatIdA, seatIdB);
+    res.json(chart);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi đổi chỗ ngồi' });
+  }
+});
+
+app.post('/api/classes/:id/seating-chart/auto-arrange', (req: Request, res: Response) => {
+  try {
+    const { mode } = req.body;
+    if (!mode) return res.status(400).json({ error: 'Cần chọn chế độ xếp chỗ' });
+    const chart = classroomStore.autoArrangeSeats(req.params.id, mode);
+    res.json(chart);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi tự động xếp chỗ ngồi' });
   }
 });
 
@@ -442,6 +586,31 @@ app.post('/api/emulation/groups', (req: Request, res: Response) => {
   }
 });
 
+app.put('/api/emulation/groups/:id', (req: Request, res: Response) => {
+  try {
+    const { TenTo, ToTruong, TrangThai } = req.body;
+    const updated = classroomStore.updateEmulationGroup(req.params.id, { TenTo, ToTruong, TrangThai });
+    if (!updated) {
+      return res.status(404).json({ error: 'Không tìm thấy tổ học sinh' });
+    }
+    res.json(updated);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi cập nhật tổ học sinh' });
+  }
+});
+
+app.delete('/api/emulation/groups/:id', (req: Request, res: Response) => {
+  try {
+    const success = classroomStore.deleteEmulationGroup(req.params.id);
+    if (!success) {
+      return res.status(404).json({ error: 'Không tìm thấy tổ học sinh để xóa' });
+    }
+    res.json({ success: true, message: 'Đã xóa tổ học sinh thành công' });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi xóa tổ học sinh' });
+  }
+});
+
 app.get('/api/emulation/groups/members', (req: Request, res: Response) => {
   try {
     const { classId } = req.query;
@@ -465,6 +634,45 @@ app.post('/api/emulation/groups/assign', (req: Request, res: Response) => {
   }
 });
 
+app.post('/api/emulation/groups/unassign', (req: Request, res: Response) => {
+  try {
+    const { MaHS } = req.body;
+    if (!MaHS) {
+      return res.status(400).json({ error: 'Cần cung cấp mã học sinh' });
+    }
+    const success = classroomStore.unassignStudentFromGroup(MaHS);
+    res.json({ success });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi hủy phân tổ học sinh' });
+  }
+});
+
+app.post('/api/emulation/groups/batch-assign', (req: Request, res: Response) => {
+  try {
+    const { assignments, TuNgay } = req.body;
+    if (!Array.isArray(assignments)) {
+      return res.status(400).json({ error: 'assignments phải là một danh sách' });
+    }
+    const results = classroomStore.batchAssignStudentsToGroup(assignments, TuNgay);
+    res.json({ success: true, count: results.length, results });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi phân tổ hàng loạt' });
+  }
+});
+
+app.post('/api/emulation/groups/auto-divide', (req: Request, res: Response) => {
+  try {
+    const { classId, groupIds, assignOnlyUnassigned } = req.body;
+    if (!classId || !Array.isArray(groupIds) || groupIds.length === 0) {
+      return res.status(400).json({ error: 'Cần chọn lớp và ít nhất một tổ để phân chia' });
+    }
+    const result = classroomStore.autoAssignStudentsEqually(classId, groupIds, Boolean(assignOnlyUnassigned));
+    res.json(result);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi tự động chia đều tổ' });
+  }
+});
+
 // Kỳ thi đua
 app.get('/api/emulation/periods', (_req: Request, res: Response) => {
   try {
@@ -477,14 +685,56 @@ app.get('/api/emulation/periods', (_req: Request, res: Response) => {
 
 app.post('/api/emulation/periods', (req: Request, res: Response) => {
   try {
-    const { NamHoc, TuanSo, TuNgay, DenNgay, DiemDauTuan, GhiChu } = req.body;
+    const { NamHoc, TuanSo, TuNgay, DenNgay, DiemDauTuan, GhiChu, MaKy, TrangThai } = req.body;
     if (!TuanSo || !TuNgay || !DenNgay) {
       return res.status(400).json({ error: 'Cần cung cấp tuần số, từ ngày và đến ngày' });
     }
-    const period = classroomStore.createEmulationPeriod({ NamHoc, TuanSo, TuNgay, DenNgay, DiemDauTuan, GhiChu });
+    const period = classroomStore.createEmulationPeriod({ NamHoc, TuanSo, TuNgay, DenNgay, DiemDauTuan, GhiChu, MaKy, TrangThai });
     res.status(201).json(period);
   } catch (error: any) {
     res.status(500).json({ error: error.message || 'Lỗi khi tạo tuần thi đua' });
+  }
+});
+
+app.put('/api/emulation/periods/:id', (req: Request, res: Response) => {
+  try {
+    const updated = classroomStore.updateEmulationPeriod(req.params.id, req.body);
+    if (!updated) {
+      return res.status(404).json({ error: 'Không tìm thấy tuần thi đua' });
+    }
+    res.json(updated);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi cập nhật tuần thi đua' });
+  }
+});
+
+app.delete('/api/emulation/periods/:id', (req: Request, res: Response) => {
+  try {
+    const success = classroomStore.deleteEmulationPeriod(req.params.id);
+    if (!success) {
+      return res.status(404).json({ error: 'Không tìm thấy tuần thi đua để xóa' });
+    }
+    res.json({ success: true, message: 'Đã xóa tuần thi đua' });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi xóa tuần thi đua' });
+  }
+});
+
+app.post('/api/emulation/periods/reset', (req: Request, res: Response) => {
+  try {
+    const { startDate, totalWeeks } = req.body;
+    const periods = classroomStore.resetEmulationPeriodsToAcademicYear(
+      startDate || '2026-09-07',
+      totalWeeks ? Number(totalWeeks) : 18
+    );
+    res.json({
+      success: true,
+      message: 'Đã thiết lập lại danh sách tuần thi đua bắt đầu từ 07/09/2026 thành công',
+      count: periods.length,
+      periods
+    });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Lỗi khi thiết lập lại tuần thi đua' });
   }
 });
 
