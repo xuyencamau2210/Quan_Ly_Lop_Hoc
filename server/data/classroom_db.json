@@ -1,0 +1,1111 @@
+{
+  "classes": [
+    {
+      "id": "cls-10a1",
+      "name": "10A1",
+      "grade": 10,
+      "academicYear": "2025 - 2026",
+      "homeroomTeacher": "Thầy Nguyễn Văn Nam",
+      "room": "P.201 - Nhà A",
+      "maxStudents": 45,
+      "note": "Lớp chuyên Toán - Tin học",
+      "createdAt": "2025-08-20T08:00:00Z"
+    },
+    {
+      "id": "cls-10a2",
+      "name": "10A2",
+      "grade": 10,
+      "academicYear": "2025 - 2026",
+      "homeroomTeacher": "Cô Trần Thị Hương",
+      "room": "P.202 - Nhà A",
+      "maxStudents": 45,
+      "note": "Lớp Tự nhiên (Lý - Hóa - Sinh)",
+      "createdAt": "2025-08-20T08:30:00Z"
+    },
+    {
+      "id": "cls-11b1",
+      "name": "11B1",
+      "grade": 11,
+      "academicYear": "2025 - 2026",
+      "homeroomTeacher": "Thầy Lê Hoàng Phúc",
+      "room": "P.301 - Nhà B",
+      "maxStudents": 42,
+      "note": "Lớp Xã hội & Ngoại ngữ",
+      "createdAt": "2025-08-21T09:00:00Z"
+    },
+    {
+      "id": "cls-12c3",
+      "name": "12C3",
+      "grade": 12,
+      "academicYear": "2025 - 2026",
+      "homeroomTeacher": "Cô Phạm Minh Châu",
+      "room": "P.403 - Nhà C",
+      "maxStudents": 40,
+      "note": "Lớp ôn thi Tốt nghiệp THPT & Đại học",
+      "createdAt": "2025-08-22T08:15:00Z"
+    }
+  ],
+  "students": [
+    {
+      "id": "stu-101",
+      "studentCode": "HS251001",
+      "fullName": "Nguyễn Văn An",
+      "gender": "male",
+      "birthDate": "2010-03-15",
+      "classId": "cls-10a1",
+      "className": "10A1",
+      "parentName": "Nguyễn Văn Bình",
+      "parentPhone": "0912345678",
+      "address": "123 Phố Huế, Q. Hai Bà Trưng, Hà Nội",
+      "status": "active",
+      "note": "Lớp trưởng, học tốt môn Toán",
+      "createdAt": "2025-08-25T07:00:00Z"
+    },
+    {
+      "id": "stu-102",
+      "studentCode": "HS251002",
+      "fullName": "Trần Thị Mai",
+      "gender": "female",
+      "birthDate": "2010-06-22",
+      "classId": "cls-10a1",
+      "className": "10A1",
+      "parentName": "Trần Văn Cường",
+      "parentPhone": "0987654321",
+      "address": "45 Đường Láng, Q. Đống Đa, Hà Nội",
+      "status": "active",
+      "note": "Lớp phó học tập",
+      "createdAt": "2025-08-25T07:05:00Z"
+    },
+    {
+      "id": "stu-103",
+      "studentCode": "HS251003",
+      "fullName": "Lê Hoàng Long",
+      "gender": "male",
+      "birthDate": "2010-09-08",
+      "classId": "cls-10a1",
+      "className": "10A1",
+      "parentName": "Lê Thanh Hải",
+      "parentPhone": "0903112233",
+      "address": "88 Nguyễn Trãi, Q. Thanh Xuân, Hà Nội",
+      "status": "active",
+      "note": "Bí thư đoàn, năng động",
+      "createdAt": "2025-08-25T07:10:00Z"
+    },
+    {
+      "id": "stu-104",
+      "studentCode": "HS251004",
+      "fullName": "Phạm Thu Hương",
+      "gender": "female",
+      "birthDate": "2010-11-12",
+      "classId": "cls-10a1",
+      "className": "10A1",
+      "parentName": "Phạm Văn Hùng",
+      "parentPhone": "0978998877",
+      "address": "15 Kim Mã, Q. Ba Đình, Hà Nội",
+      "status": "active",
+      "note": "Đạt giải Nhì Tiếng Anh cấp trường",
+      "createdAt": "2025-08-25T07:15:00Z"
+    },
+    {
+      "id": "stu-105",
+      "studentCode": "HS251005",
+      "fullName": "Đỗ Minh Quân",
+      "gender": "male",
+      "birthDate": "2010-01-20",
+      "classId": "cls-10a1",
+      "className": "10A1",
+      "parentName": "Đỗ Khắc Nam",
+      "parentPhone": "0934556677",
+      "address": "72 Trần Phú, Hà Đông, Hà Nội",
+      "status": "active",
+      "note": "Đội tuyển bóng rổ trường",
+      "createdAt": "2025-08-25T07:20:00Z"
+    },
+    {
+      "id": "stu-106",
+      "studentCode": "HS251006",
+      "fullName": "Vũ Ngọc Ánh",
+      "gender": "female",
+      "birthDate": "2010-04-18",
+      "classId": "cls-10a2",
+      "className": "10A2",
+      "parentName": "Vũ Văn Toàn",
+      "parentPhone": "0961234890",
+      "address": "56 Cầu Giấy, Q. Cầu Giấy, Hà Nội",
+      "status": "active",
+      "note": "Yêu thích môn Hóa học",
+      "createdAt": "2025-08-26T08:00:00Z"
+    },
+    {
+      "id": "stu-107",
+      "studentCode": "HS251007",
+      "fullName": "Hoàng Quốc Bảo",
+      "gender": "male",
+      "birthDate": "2010-08-30",
+      "classId": "cls-10a2",
+      "className": "10A2",
+      "parentName": "Hoàng Quốc Việt",
+      "parentPhone": "0918765432",
+      "address": "102 Hoàng Hoa Thám, Ba Đình, Hà Nội",
+      "status": "active",
+      "note": "Thành viên CLB Khoa học",
+      "createdAt": "2025-08-26T08:05:00Z"
+    },
+    {
+      "id": "stu-108",
+      "studentCode": "HS251008",
+      "fullName": "Bùi Khánh Linh",
+      "gender": "female",
+      "birthDate": "2010-12-05",
+      "classId": "cls-10a2",
+      "className": "10A2",
+      "parentName": "Bùi Văn Dũng",
+      "parentPhone": "0945678901",
+      "address": "29 Tây Sơn, Q. Đống Đa, Hà Nội",
+      "status": "active",
+      "note": "Lớp phó đời sống",
+      "createdAt": "2025-08-26T08:10:00Z"
+    },
+    {
+      "id": "stu-109",
+      "studentCode": "HS241009",
+      "fullName": "Đặng Thanh Tâm",
+      "gender": "female",
+      "birthDate": "2009-02-14",
+      "classId": "cls-11b1",
+      "className": "11B1",
+      "parentName": "Đặng Quốc Tuấn",
+      "parentPhone": "0908889999",
+      "address": "14 Phan Đình Phùng, Ba Đình, Hà Nội",
+      "status": "active",
+      "note": "Điểm tổng kết Văn 9.2",
+      "createdAt": "2025-08-27T08:00:00Z"
+    },
+    {
+      "id": "stu-110",
+      "studentCode": "HS241010",
+      "fullName": "Trương Gia Huy",
+      "gender": "male",
+      "birthDate": "2009-07-19",
+      "classId": "cls-11b1",
+      "className": "11B1",
+      "parentName": "Trương Văn Nghĩa",
+      "parentPhone": "0977112244",
+      "address": "63 Lê Duẩn, Q. Hoàn Kiếm, Hà Nội",
+      "status": "active",
+      "note": "Thành viên CLB Nhiếp ảnh",
+      "createdAt": "2025-08-27T08:05:00Z"
+    },
+    {
+      "id": "stu-111",
+      "studentCode": "HS231011",
+      "fullName": "Lý Diệu Thảo",
+      "gender": "female",
+      "birthDate": "2008-05-25",
+      "classId": "cls-12c3",
+      "className": "12C3",
+      "parentName": "Lý Quốc Cường",
+      "parentPhone": "0913554433",
+      "address": "89 Giảng Võ, Q. Ba Đình, Hà Nội",
+      "status": "active",
+      "note": "Học bổng thủ khoa khối 11",
+      "createdAt": "2025-08-28T08:00:00Z"
+    },
+    {
+      "id": "stu-112",
+      "studentCode": "HS231012",
+      "fullName": "Ngô Đức Thắng",
+      "gender": "male",
+      "birthDate": "2008-10-10",
+      "classId": "cls-12c3",
+      "className": "12C3",
+      "parentName": "Ngô Đức Thành",
+      "parentPhone": "0922334455",
+      "address": "210 Bạch Mai, Hai Bà Trưng, Hà Nội",
+      "status": "active",
+      "note": "Mục tiêu Đại học Bách Khoa",
+      "createdAt": "2025-08-28T08:10:00Z"
+    }
+  ],
+  "attendance": [
+    {
+      "id": "att-1",
+      "classId": "cls-10a1",
+      "date": "2026-10-09",
+      "studentId": "stu-101",
+      "studentName": "Nguyễn Văn An",
+      "studentCode": "HS251001",
+      "status": "present",
+      "note": "",
+      "updatedAt": "2026-10-09T07:15:00Z"
+    },
+    {
+      "id": "att-2",
+      "classId": "cls-10a1",
+      "date": "2026-10-09",
+      "studentId": "stu-102",
+      "studentName": "Trần Thị Mai",
+      "studentCode": "HS251002",
+      "status": "present",
+      "note": "",
+      "updatedAt": "2026-10-09T07:15:00Z"
+    },
+    {
+      "id": "att-3",
+      "classId": "cls-10a1",
+      "date": "2026-10-09",
+      "studentId": "stu-103",
+      "studentName": "Lê Hoàng Long",
+      "studentCode": "HS251003",
+      "status": "excused",
+      "note": "Phụ huynh xin phép đi khám mắt",
+      "updatedAt": "2026-10-09T07:15:00Z"
+    },
+    {
+      "id": "att-4",
+      "classId": "cls-10a1",
+      "date": "2026-10-09",
+      "studentId": "stu-104",
+      "studentName": "Phạm Thu Hương",
+      "studentCode": "HS251004",
+      "status": "present",
+      "note": "",
+      "updatedAt": "2026-10-09T07:15:00Z"
+    },
+    {
+      "id": "att-5",
+      "classId": "cls-10a1",
+      "date": "2026-10-09",
+      "studentId": "stu-105",
+      "studentName": "Đỗ Minh Quân",
+      "studentCode": "HS251005",
+      "status": "late",
+      "note": "Đến muộn 10 phút (xe hỏng)",
+      "updatedAt": "2026-10-09T07:25:00Z"
+    },
+    {
+      "id": "att-6",
+      "classId": "cls-10a2",
+      "date": "2026-10-09",
+      "studentId": "stu-106",
+      "studentName": "Vũ Ngọc Ánh",
+      "studentCode": "HS251006",
+      "status": "present",
+      "note": "",
+      "updatedAt": "2026-10-09T07:20:00Z"
+    },
+    {
+      "id": "att-7",
+      "classId": "cls-10a2",
+      "date": "2026-10-09",
+      "studentId": "stu-107",
+      "studentName": "Hoàng Quốc Bảo",
+      "studentCode": "HS251007",
+      "status": "present",
+      "note": "",
+      "updatedAt": "2026-10-09T07:20:00Z"
+    },
+    {
+      "id": "att-8",
+      "classId": "cls-10a2",
+      "date": "2026-10-09",
+      "studentId": "stu-108",
+      "studentName": "Bùi Khánh Linh",
+      "studentCode": "HS251008",
+      "status": "unexcused",
+      "note": "Chưa có lý do, GVCN đang liên hệ PH",
+      "updatedAt": "2026-10-09T07:20:00Z"
+    }
+  ],
+  "grades": [
+    {
+      "id": "gr-101",
+      "studentId": "stu-101",
+      "studentName": "Nguyễn Văn An",
+      "studentCode": "HS251001",
+      "classId": "cls-10a1",
+      "subject": "Toán học",
+      "semester": "HK1",
+      "oral": [
+        9,
+        9.5
+      ],
+      "test15": [
+        8.5,
+        9
+      ],
+      "test45": 8.8,
+      "finalExam": 9,
+      "average": 8.9,
+      "rank": "Xuất sắc",
+      "note": "Bài kiểm tra tư duy rất tốt",
+      "updatedAt": "2026-10-05T10:00:00Z"
+    },
+    {
+      "id": "gr-102",
+      "studentId": "stu-102",
+      "studentName": "Trần Thị Mai",
+      "studentCode": "HS251002",
+      "classId": "cls-10a1",
+      "subject": "Toán học",
+      "semester": "HK1",
+      "oral": [
+        8,
+        8.5
+      ],
+      "test15": [
+        8,
+        8.5
+      ],
+      "test45": 8.2,
+      "finalExam": 8.5,
+      "average": 8.3,
+      "rank": "Giỏi",
+      "note": "Chăm chỉ, làm bài cẩn thận",
+      "updatedAt": "2026-10-05T10:00:00Z"
+    },
+    {
+      "id": "gr-103",
+      "studentId": "stu-103",
+      "studentName": "Lê Hoàng Long",
+      "studentCode": "HS251003",
+      "classId": "cls-10a1",
+      "subject": "Toán học",
+      "semester": "HK1",
+      "oral": [
+        7.5,
+        8
+      ],
+      "test15": [
+        7,
+        7.5
+      ],
+      "test45": 7.5,
+      "finalExam": 7.8,
+      "average": 7.6,
+      "rank": "Khá",
+      "note": "Cần ôn thêm phần hình học không gian",
+      "updatedAt": "2026-10-05T10:00:00Z"
+    },
+    {
+      "id": "gr-104",
+      "studentId": "stu-104",
+      "studentName": "Phạm Thu Hương",
+      "studentCode": "HS251004",
+      "classId": "cls-10a1",
+      "subject": "Toán học",
+      "semester": "HK1",
+      "oral": [
+        8.5,
+        9
+      ],
+      "test15": [
+        8,
+        8.5
+      ],
+      "test45": 8,
+      "finalExam": 8.2,
+      "average": 8.2,
+      "rank": "Giỏi",
+      "note": "",
+      "updatedAt": "2026-10-05T10:00:00Z"
+    },
+    {
+      "id": "gr-105",
+      "studentId": "stu-105",
+      "studentName": "Đỗ Minh Quân",
+      "studentCode": "HS251005",
+      "classId": "cls-10a1",
+      "subject": "Toán học",
+      "semester": "HK1",
+      "oral": [
+        6.5,
+        7
+      ],
+      "test15": [
+        6.5,
+        6
+      ],
+      "test45": 6.8,
+      "finalExam": 7,
+      "average": 6.7,
+      "rank": "Trung bình",
+      "note": "Cần kèm thêm giải tích cơ bản",
+      "updatedAt": "2026-10-05T10:00:00Z"
+    },
+    {
+      "id": "gr-106",
+      "studentId": "stu-101",
+      "studentName": "Nguyễn Văn An",
+      "studentCode": "HS251001",
+      "classId": "cls-10a1",
+      "subject": "Ngữ văn",
+      "semester": "HK1",
+      "oral": [
+        8
+      ],
+      "test15": [
+        8,
+        8.5
+      ],
+      "test45": 8,
+      "finalExam": 8,
+      "average": 8.1,
+      "rank": "Giỏi",
+      "note": "",
+      "updatedAt": "2026-10-06T11:00:00Z"
+    },
+    {
+      "id": "gr-107",
+      "studentId": "stu-102",
+      "studentName": "Trần Thị Mai",
+      "studentCode": "HS251002",
+      "classId": "cls-10a1",
+      "subject": "Ngữ văn",
+      "semester": "HK1",
+      "oral": [
+        9
+      ],
+      "test15": [
+        9,
+        8.5
+      ],
+      "test45": 8.8,
+      "finalExam": 9,
+      "average": 8.9,
+      "rank": "Xuất sắc",
+      "note": "Văn phong biểu cảm xuất sắc",
+      "updatedAt": "2026-10-06T11:00:00Z"
+    }
+  ],
+  "documents": [
+    {
+      "id": "doc-1",
+      "title": "Phân phối chương trình Toán 10 - Năm học 2025-2026",
+      "category": "lesson_plan",
+      "classId": "cls-10a1",
+      "className": "10A1",
+      "subject": "Toán học",
+      "driveUrl": "https://drive.google.com/drive/folders/1A_Toan10_GiaoAn_2025",
+      "driveFileId": "1A_Toan10_GiaoAn_2025",
+      "fileSize": "1.4 MB",
+      "fileExtension": "PDF",
+      "uploadedBy": "Thầy Nguyễn Văn Nam",
+      "uploadedAt": "2025-09-01T08:00:00Z",
+      "isGoogleDriveSynced": false,
+      "description": "Kế hoạch dạy học theo định hướng đổi mới phương pháp GDPT 2018"
+    },
+    {
+      "id": "doc-2",
+      "title": "Đề kiểm tra giữa kỳ 1 môn Toán (Có đáp án chi tiết)",
+      "category": "exam",
+      "classId": "cls-10a1",
+      "className": "10A1",
+      "subject": "Toán học",
+      "driveUrl": "https://drive.google.com/file/d/1B_DeThiGK1_Toan10/view",
+      "driveFileId": "1B_DeThiGK1_Toan10",
+      "fileSize": "850 KB",
+      "fileExtension": "DOCX",
+      "uploadedBy": "Thầy Nguyễn Văn Nam",
+      "uploadedAt": "2026-10-02T14:30:00Z",
+      "isGoogleDriveSynced": false,
+      "description": "Bộ đề 4 mã đề trắc nghiệm và tự luận chuẩn ma trận"
+    },
+    {
+      "id": "doc-3",
+      "title": "Phiếu bài tập rèn luyện kỹ năng Hình học không gian",
+      "category": "assignment",
+      "classId": "cls-10a1",
+      "className": "10A1",
+      "subject": "Toán học",
+      "driveUrl": "https://drive.google.com/file/d/1C_BaiTapHinhHoc_10/view",
+      "driveFileId": "1C_BaiTapHinhHoc_10",
+      "fileSize": "2.1 MB",
+      "fileExtension": "PDF",
+      "uploadedBy": "Thầy Nguyễn Văn Nam",
+      "uploadedAt": "2026-10-05T09:15:00Z",
+      "isGoogleDriveSynced": false,
+      "description": "50 bài tập nâng cao dành cho học sinh khá giỏi"
+    },
+    {
+      "id": "doc-4",
+      "title": "Sổ tay nội quy lớp học và tiêu chí rèn luyện đạo đức",
+      "category": "handbook",
+      "classId": "cls-10a1",
+      "className": "10A1",
+      "driveUrl": "https://drive.google.com/file/d/1D_NoiQuyLop_10A1/view",
+      "driveFileId": "1D_NoiQuyLop_10A1",
+      "fileSize": "540 KB",
+      "fileExtension": "PDF",
+      "uploadedBy": "Ban Giám Hiệu",
+      "uploadedAt": "2025-08-30T10:00:00Z",
+      "isGoogleDriveSynced": false,
+      "description": "Ban hành áp dụng cho toàn bộ học sinh lớp 10A1"
+    },
+    {
+      "id": "doc-5",
+      "title": "Thông báo họp phụ huynh học sinh đầu năm",
+      "category": "notice",
+      "classId": "cls-10a2",
+      "className": "10A2",
+      "driveUrl": "https://drive.google.com/file/d/1E_ThongBaoHopPH_10A2/view",
+      "driveFileId": "1E_ThongBaoHopPH_10A2",
+      "fileSize": "320 KB",
+      "fileExtension": "PDF",
+      "uploadedBy": "Cô Trần Thị Hương",
+      "uploadedAt": "2025-09-05T16:00:00Z",
+      "isGoogleDriveSynced": false,
+      "description": "Thư mời gửi phụ huynh học sinh lớp 10A2"
+    }
+  ],
+  "settings": {
+    "academicYear": "2025 - 2026",
+    "currentSemester": "HK1",
+    "schoolName": "Trường THPT Chuyên Nguyễn Huệ",
+    "teacherName": "Thầy Nguyễn Văn Nam",
+    "teacherEmail": "nam.nguyen@thptnguyenhue.edu.vn",
+    "teacherPhone": "0912 345 678",
+    "department": "Tổ Toán - Tin học",
+    "autoCalculateAverages": true,
+    "storageMode": "server_store",
+    "googleSheets": {
+      "sheetId": "1X_QUAN_LY_LOP_HOC_SHEET_DEMO_2026",
+      "sheetName": "DanhSach_Diem_DiemDanh_2025_2026",
+      "connected": false,
+      "statusMessage": "Chưa kích hoạt kết nối OAuth Google Sheets (Đang lưu trữ dữ liệu an toàn trên Server Store)"
+    },
+    "googleDrive": {
+      "folderId": "1Y_CLASSROOM_DOCS_DRIVE_FOLDER_DEMO",
+      "folderName": "QuanLyLopHoc_TaiLieu_2025_2026",
+      "connected": false,
+      "statusMessage": "Chưa kích hoạt kết nối OAuth Google Drive (Đang quản lý liên kết tài liệu qua Server Repository)"
+    }
+  },
+  "lastUpdated": "2026-10-09T13:53:39.628Z",
+  "emulationCategories": [
+    {
+      "MaLoi": "DM-MUON",
+      "TenLoi": "Đi học muộn",
+      "Loai": "TRU",
+      "Diem": 2,
+      "MoTa": "Đến lớp sau tiếng trống vào học hoặc điểm danh",
+      "TrangThai": "DANG_DUNG"
+    },
+    {
+      "MaLoi": "DM-BTVN",
+      "TenLoi": "Không làm bài tập",
+      "Loai": "TRU",
+      "Diem": 2,
+      "MoTa": "Chưa hoàn thành bài tập về nhà theo yêu cầu giáo viên",
+      "TrangThai": "DANG_DUNG"
+    },
+    {
+      "MaLoi": "DM-NOICHUYEN",
+      "TenLoi": "Nói chuyện riêng",
+      "Loai": "TRU",
+      "Diem": 1,
+      "MoTa": "Mất trật tự, làm việc riêng trong giờ học",
+      "TrangThai": "DANG_DUNG"
+    },
+    {
+      "MaLoi": "DM-DONGPHUC",
+      "TenLoi": "Không đồng phục đúng quy định",
+      "Loai": "TRU",
+      "Diem": 1,
+      "MoTa": "Không mặc đúng đồng phục hoặc không đeo phù hiệu",
+      "TrangThai": "DANG_DUNG"
+    },
+    {
+      "MaLoi": "DM-HOCTOT",
+      "TenLoi": "Thành tích học tập tốt",
+      "Loai": "CONG",
+      "Diem": 3,
+      "MoTa": "Đạt điểm 9, 10 trong giờ học hoặc phát biểu xuất sắc",
+      "TrangThai": "DANG_DUNG"
+    },
+    {
+      "MaLoi": "DM-GIUPBAN",
+      "TenLoi": "Giúp đỡ bạn",
+      "Loai": "CONG",
+      "Diem": 3,
+      "MoTa": "Đôi bạn cùng tiến, hướng dẫn bài hoặc hỗ trợ bạn gặp khó khăn",
+      "TrangThai": "DANG_DUNG"
+    },
+    {
+      "MaLoi": "DM-VIECTOT",
+      "TenLoi": "Việc tốt nổi bật",
+      "Loai": "CONG",
+      "Diem": 3,
+      "MoTa": "Nhặt được của rơi trả người đánh mất hoặc tích cực lao động",
+      "TrangThai": "DANG_DUNG"
+    }
+  ],
+  "emulationGroups": [
+    {
+      "MaTo": "TO-10A1-1",
+      "MaLop": "cls-10a1",
+      "TenTo": "Tổ 1 (Tiên Phong)",
+      "ToTruong": "Nguyễn Văn An",
+      "TrangThai": "DANG_HOAT_DONG"
+    },
+    {
+      "MaTo": "TO-10A1-2",
+      "MaLop": "cls-10a1",
+      "TenTo": "Tổ 2 (Đoàn Kết)",
+      "ToTruong": "Trần Thị Mai",
+      "TrangThai": "DANG_HOAT_DONG"
+    },
+    {
+      "MaTo": "TO-10A1-3",
+      "MaLop": "cls-10a1",
+      "TenTo": "Tổ 3 (Sáng Tạo)",
+      "ToTruong": "Lê Hoàng Long",
+      "TrangThai": "DANG_HOAT_DONG"
+    },
+    {
+      "MaTo": "TO-10A1-4",
+      "MaLop": "cls-10a1",
+      "TenTo": "Tổ 4 (Bứt Phá)",
+      "ToTruong": "Đỗ Minh Quân",
+      "TrangThai": "DANG_HOAT_DONG"
+    },
+    {
+      "MaTo": "TO-10A2-1",
+      "MaLop": "cls-10a2",
+      "TenTo": "Tổ 1",
+      "ToTruong": "Vũ Ngọc Ánh",
+      "TrangThai": "DANG_HOAT_DONG"
+    },
+    {
+      "MaTo": "TO-10A2-2",
+      "MaLop": "cls-10a2",
+      "TenTo": "Tổ 2",
+      "ToTruong": "Hoàng Quốc Bảo",
+      "TrangThai": "DANG_HOAT_DONG"
+    },
+    {
+      "MaTo": "TO-11B1-1",
+      "MaLop": "cls-11b1",
+      "TenTo": "Tổ 1",
+      "ToTruong": "Đặng Thanh Tâm",
+      "TrangThai": "DANG_HOAT_DONG"
+    },
+    {
+      "MaTo": "TO-12C3-1",
+      "MaLop": "cls-12c3",
+      "TenTo": "Tổ 1",
+      "ToTruong": "Lý Diệu Thảo",
+      "TrangThai": "DANG_HOAT_DONG"
+    }
+  ],
+  "groupMembers": [
+    {
+      "MaPhanTo": "PT-101",
+      "MaHS": "stu-101",
+      "MaTo": "TO-10A1-1",
+      "TuNgay": "2025-09-01"
+    },
+    {
+      "MaPhanTo": "PT-102",
+      "MaHS": "stu-102",
+      "MaTo": "TO-10A1-2",
+      "TuNgay": "2025-09-01"
+    },
+    {
+      "MaPhanTo": "PT-103",
+      "MaHS": "stu-103",
+      "MaTo": "TO-10A1-3",
+      "TuNgay": "2025-09-01"
+    },
+    {
+      "MaPhanTo": "PT-104",
+      "MaHS": "stu-104",
+      "MaTo": "TO-10A1-1",
+      "TuNgay": "2025-09-01"
+    },
+    {
+      "MaPhanTo": "PT-105",
+      "MaHS": "stu-105",
+      "MaTo": "TO-10A1-4",
+      "TuNgay": "2025-09-01"
+    },
+    {
+      "MaPhanTo": "PT-106",
+      "MaHS": "stu-106",
+      "MaTo": "TO-10A2-1",
+      "TuNgay": "2025-09-01"
+    },
+    {
+      "MaPhanTo": "PT-107",
+      "MaHS": "stu-107",
+      "MaTo": "TO-10A2-1",
+      "TuNgay": "2025-09-01"
+    },
+    {
+      "MaPhanTo": "PT-108",
+      "MaHS": "stu-108",
+      "MaTo": "TO-10A2-2",
+      "TuNgay": "2025-09-01"
+    },
+    {
+      "MaPhanTo": "PT-109",
+      "MaHS": "stu-109",
+      "MaTo": "TO-11B1-1",
+      "TuNgay": "2025-09-01"
+    },
+    {
+      "MaPhanTo": "PT-110",
+      "MaHS": "stu-110",
+      "MaTo": "TO-11B1-1",
+      "TuNgay": "2025-09-01"
+    },
+    {
+      "MaPhanTo": "PT-111",
+      "MaHS": "stu-111",
+      "MaTo": "TO-12C3-1",
+      "TuNgay": "2025-09-01"
+    },
+    {
+      "MaPhanTo": "PT-112",
+      "MaHS": "stu-112",
+      "MaTo": "TO-12C3-1",
+      "TuNgay": "2025-09-01"
+    }
+  ],
+  "emulationPeriods": [
+    {
+      "MaKy": "2026-W40",
+      "NamHoc": "2025 - 2026",
+      "TuanSo": 40,
+      "TuNgay": "2026-09-28",
+      "DenNgay": "2026-10-04",
+      "DiemDauTuan": 0,
+      "TrangThai": "DA_KHOA",
+      "ThoiGianKhoa": "2026-10-04T18:00:00Z",
+      "NguoiKhoa": "Thầy Nguyễn Văn Nam (GVCN)",
+      "GhiChu": "Tuần phát động phong trào thi đua tháng 10"
+    },
+    {
+      "MaKy": "2026-W41",
+      "NamHoc": "2025 - 2026",
+      "TuanSo": 41,
+      "TuNgay": "2026-10-05",
+      "DenNgay": "2026-10-11",
+      "DiemDauTuan": 0,
+      "TrangThai": "DANG_DIEN_RA",
+      "GhiChu": "Tuần học trọng tâm ôn giữa kỳ 1",
+      "ThoiGianKhoa": "2026-10-09T13:53:28.683Z",
+      "NguoiKhoa": "Thầy Nguyễn Văn Nam",
+      "LichSuMoKhoa": [
+        {
+          "NguoiMo": "Thầy Nguyễn Văn Nam",
+          "ThoiGian": "2026-10-09T13:53:39.628Z",
+          "LyDo": "Cần ghi nhận bổ sung thành tích đột xuất cho học sinh"
+        }
+      ]
+    },
+    {
+      "MaKy": "2026-W42",
+      "NamHoc": "2025 - 2026",
+      "TuanSo": 42,
+      "TuNgay": "2026-10-12",
+      "DenNgay": "2026-10-18",
+      "DiemDauTuan": 0,
+      "TrangThai": "DANG_DIEN_RA",
+      "GhiChu": "Tuần thi đua chào mừng 20/10"
+    }
+  ],
+  "emulationRecords": [
+    {
+      "MaGhiNhan": "REC-W40-001",
+      "Ngay": "2026-09-29",
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-101",
+      "TenHS": "Nguyễn Văn An",
+      "TenTo": "Tổ 1 (Tiên Phong)",
+      "MaLoi": "DM-HOCTOT",
+      "TenLoi": "Thành tích học tập tốt",
+      "Loai": "CONG",
+      "Diem": 3,
+      "GhiChu": "Đạt điểm 10 kiểm tra miệng môn Toán",
+      "NguoiGhiNhan": "Thầy Nguyễn Văn Nam",
+      "TrangThai": "HIEU_LUC",
+      "ThoiGianTao": "2026-09-29T08:30:00Z"
+    },
+    {
+      "MaGhiNhan": "REC-W40-002",
+      "Ngay": "2026-09-30",
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-102",
+      "TenHS": "Trần Thị Mai",
+      "TenTo": "Tổ 2 (Đoàn Kết)",
+      "MaLoi": "DM-VIECTOT",
+      "TenLoi": "Việc tốt nổi bật",
+      "Loai": "CONG",
+      "Diem": 3,
+      "GhiChu": "Nhặt được ví tiền và nộp lại cho ban giám hiệu",
+      "NguoiGhiNhan": "Cô Trần Thị Hương",
+      "TrangThai": "HIEU_LUC",
+      "ThoiGianTao": "2026-09-30T10:15:00Z"
+    },
+    {
+      "MaGhiNhan": "REC-W40-003",
+      "Ngay": "2026-10-01",
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-105",
+      "TenHS": "Đỗ Minh Quân",
+      "TenTo": "Tổ 4 (Bứt Phá)",
+      "MaLoi": "DM-MUON",
+      "TenLoi": "Đi học muộn",
+      "Loai": "TRU",
+      "Diem": -2,
+      "GhiChu": "Muộn 15 phút tiết 1",
+      "NguoiGhiNhan": "Sao đỏ khối 10",
+      "TrangThai": "HIEU_LUC",
+      "ThoiGianTao": "2026-10-01T07:15:00Z"
+    },
+    {
+      "MaGhiNhan": "REC-W41-001",
+      "Ngay": "2026-10-06",
+      "MaKy": "2026-W41",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-101",
+      "TenHS": "Nguyễn Văn An",
+      "TenTo": "Tổ 1 (Tiên Phong)",
+      "MaLoi": "DM-GIUPBAN",
+      "TenLoi": "Giúp đỡ bạn",
+      "Loai": "CONG",
+      "Diem": 3,
+      "GhiChu": "Kèm bạn Quân ôn bài tập Toán hình",
+      "NguoiGhiNhan": "Thầy Nguyễn Văn Nam",
+      "TrangThai": "HIEU_LUC",
+      "ThoiGianTao": "2026-10-06T15:00:00Z"
+    },
+    {
+      "MaGhiNhan": "REC-W41-002",
+      "Ngay": "2026-10-07",
+      "MaKy": "2026-W41",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-103",
+      "TenHS": "Lê Hoàng Long",
+      "TenTo": "Tổ 3 (Sáng Tạo)",
+      "MaLoi": "DM-NOICHUYEN",
+      "TenLoi": "Nói chuyện riêng",
+      "Loai": "TRU",
+      "Diem": -1,
+      "GhiChu": "Nhắc nhở 2 lần trong giờ Sinh",
+      "NguoiGhiNhan": "Cô Nguyễn Lan",
+      "TrangThai": "HIEU_LUC",
+      "ThoiGianTao": "2026-10-07T09:45:00Z"
+    },
+    {
+      "MaGhiNhan": "REC-W41-003",
+      "Ngay": "2026-10-08",
+      "MaKy": "2026-W41",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-104",
+      "TenHS": "Phạm Thu Hương",
+      "TenTo": "Tổ 1 (Tiên Phong)",
+      "MaLoi": "DM-HOCTOT",
+      "TenLoi": "Thành tích học tập tốt",
+      "Loai": "CONG",
+      "Diem": 3,
+      "GhiChu": "Thuyết trình bài tiếng Anh xuất sắc",
+      "NguoiGhiNhan": "Thầy John Smith",
+      "TrangThai": "HIEU_LUC",
+      "ThoiGianTao": "2026-10-08T10:30:00Z"
+    },
+    {
+      "MaGhiNhan": "REC-W41-004",
+      "Ngay": "2026-10-08",
+      "MaKy": "2026-W41",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-105",
+      "TenHS": "Đỗ Minh Quân",
+      "TenTo": "Tổ 4 (Bứt Phá)",
+      "MaLoi": "DM-DONGPHUC",
+      "TenLoi": "Không đồng phục đúng quy định",
+      "Loai": "TRU",
+      "Diem": -1,
+      "GhiChu": "Quên mang thẻ học sinh",
+      "NguoiGhiNhan": "Sao đỏ",
+      "TrangThai": "DA_HUY",
+      "ThoiGianTao": "2026-10-08T07:10:00Z",
+      "NguoiSua": "Thầy Nguyễn Văn Nam (GVCN)",
+      "LyDoSuaHuy": "Học sinh có mang thẻ nhưng để trong cặp, đã xuất trình lại"
+    },
+    {
+      "MaGhiNhan": "REC-W41-005",
+      "Ngay": "2026-10-09",
+      "MaKy": "2026-W41",
+      "MaLop": "cls-10a2",
+      "MaHS": "stu-106",
+      "TenHS": "Vũ Ngọc Ánh",
+      "TenTo": "Tổ 1",
+      "MaLoi": "DM-HOCTOT",
+      "TenLoi": "Thành tích học tập tốt",
+      "Loai": "CONG",
+      "Diem": 3,
+      "GhiChu": "Điểm 10 thực hành Hóa",
+      "NguoiGhiNhan": "Cô Trần Thị Hương",
+      "TrangThai": "HIEU_LUC",
+      "ThoiGianTao": "2026-10-09T08:00:00Z"
+    },
+    {
+      "MaGhiNhan": "REC-3999847-CCF",
+      "Ngay": "2026-10-09",
+      "MaKy": "2026-W41",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-102",
+      "TenHS": "Trần Thị Mai",
+      "TenTo": "Tổ 2 (Đoàn Kết)",
+      "MaLoi": "DM-HOCTOT",
+      "TenLoi": "Thành tích học tập tốt",
+      "Loai": "CONG",
+      "Diem": 3,
+      "GhiChu": "Phát biểu xây dựng bài sôi nổi",
+      "NguoiGhiNhan": "Cô Lan",
+      "TrangThai": "HIEU_LUC",
+      "ThoiGianTao": "2026-10-09T13:53:19.847Z"
+    }
+  ],
+  "weeklyStudentSummaries": [
+    {
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-101",
+      "TenHS": "Nguyễn Văn An",
+      "MaTo": "TO-10A1-1",
+      "TenTo": "Tổ 1 (Tiên Phong)",
+      "DiemDauTuan": 0,
+      "TongDiemCong": 3,
+      "TongDiemTru": 0,
+      "DiemCuoiTuan": 3,
+      "SoThanhTich": 1,
+      "SoViPham": 0,
+      "XepHang": 1,
+      "TrangThai": "DA_KHOA"
+    },
+    {
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-102",
+      "TenHS": "Trần Thị Mai",
+      "MaTo": "TO-10A1-2",
+      "TenTo": "Tổ 2 (Đoàn Kết)",
+      "DiemDauTuan": 0,
+      "TongDiemCong": 3,
+      "TongDiemTru": 0,
+      "DiemCuoiTuan": 3,
+      "SoThanhTich": 1,
+      "SoViPham": 0,
+      "XepHang": 1,
+      "TrangThai": "DA_KHOA"
+    },
+    {
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-103",
+      "TenHS": "Lê Hoàng Long",
+      "MaTo": "TO-10A1-3",
+      "TenTo": "Tổ 3 (Sáng Tạo)",
+      "DiemDauTuan": 0,
+      "TongDiemCong": 0,
+      "TongDiemTru": 0,
+      "DiemCuoiTuan": 0,
+      "SoThanhTich": 0,
+      "SoViPham": 0,
+      "XepHang": 3,
+      "TrangThai": "DA_KHOA"
+    },
+    {
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-104",
+      "TenHS": "Phạm Thu Hương",
+      "MaTo": "TO-10A1-1",
+      "TenTo": "Tổ 1 (Tiên Phong)",
+      "DiemDauTuan": 0,
+      "TongDiemCong": 0,
+      "TongDiemTru": 0,
+      "DiemCuoiTuan": 0,
+      "SoThanhTich": 0,
+      "SoViPham": 0,
+      "XepHang": 3,
+      "TrangThai": "DA_KHOA"
+    },
+    {
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaHS": "stu-105",
+      "TenHS": "Đỗ Minh Quân",
+      "MaTo": "TO-10A1-4",
+      "TenTo": "Tổ 4 (Bứt Phá)",
+      "DiemDauTuan": 0,
+      "TongDiemCong": 0,
+      "TongDiemTru": -2,
+      "DiemCuoiTuan": -2,
+      "SoThanhTich": 0,
+      "SoViPham": 1,
+      "XepHang": 5,
+      "TrangThai": "DA_KHOA"
+    }
+  ],
+  "weeklyGroupSummaries": [
+    {
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaTo": "TO-10A1-2",
+      "TenTo": "Tổ 2 (Đoàn Kết)",
+      "SoThanhVien": 1,
+      "TongDiemCong": 3,
+      "TongDiemTru": 0,
+      "TongDiem": 3,
+      "DiemBinhQuan": 3,
+      "XepHang": 1,
+      "TrangThai": "DA_KHOA"
+    },
+    {
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaTo": "TO-10A1-1",
+      "TenTo": "Tổ 1 (Tiên Phong)",
+      "SoThanhVien": 2,
+      "TongDiemCong": 3,
+      "TongDiemTru": 0,
+      "TongDiem": 3,
+      "DiemBinhQuan": 1.5,
+      "XepHang": 2,
+      "TrangThai": "DA_KHOA"
+    },
+    {
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaTo": "TO-10A1-3",
+      "TenTo": "Tổ 3 (Sáng Tạo)",
+      "SoThanhVien": 1,
+      "TongDiemCong": 0,
+      "TongDiemTru": 0,
+      "TongDiem": 0,
+      "DiemBinhQuan": 0,
+      "XepHang": 3,
+      "TrangThai": "DA_KHOA"
+    },
+    {
+      "MaKy": "2026-W40",
+      "MaLop": "cls-10a1",
+      "MaTo": "TO-10A1-4",
+      "TenTo": "Tổ 4 (Bứt Phá)",
+      "SoThanhVien": 1,
+      "TongDiemCong": 0,
+      "TongDiemTru": -2,
+      "TongDiem": -2,
+      "DiemBinhQuan": -2,
+      "XepHang": 4,
+      "TrangThai": "DA_KHOA"
+    }
+  ]
+}

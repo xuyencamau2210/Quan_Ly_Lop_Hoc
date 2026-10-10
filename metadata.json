@@ -1,0 +1,8 @@
+{
+  "name": "QUẢN LÝ LỚP HỌC",
+  "description": "Hệ thống quản lý lớp học toàn diện, học sinh, điểm danh, bảng điểm, báo cáo và tài liệu dành cho giáo viên và nhà trường.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
