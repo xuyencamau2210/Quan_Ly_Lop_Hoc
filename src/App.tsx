@@ -262,21 +262,7 @@ function MainApp() {
         defaultClassId={selectedClassForTab}
       />
 
-      {/* Reset Demo Data Modal */}
-      <ConfirmModal
-        isOpen={isResetModalOpen}
-        title="Khôi phục dữ liệu ban đầu?"
-        message="Hành động này sẽ khôi phục lại dữ liệu gốc của lớp 10C2 (39 học sinh, ban cán sự, sơ đồ chỗ ngồi và 4 tổ thi đua). Mọi thay đổi bạn đã tạo sau đó sẽ được làm mới."
-        confirmText="Khôi phục ngay"
-        cancelText="Giữ lại dữ liệu hiện tại"
-        isDestructive={false}
-        isLoading={isResetting}
-        onConfirm={handleResetDemo}
-        onCancel={() => setIsResetModalOpen(false)}
-      />
-    </div>
-  );
-}
+      
 
 export default function App() {
   return (
